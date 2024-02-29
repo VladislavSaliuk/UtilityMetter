@@ -1,12 +1,16 @@
 package org.example.utilitymetter;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.example.utilitymetter.initializators.ComboBoxInitializer;
+import org.example.utilitymetter.initializators.ComboBoxInitializerWithStringElements;
+
+import java.util.List;
 
 public class Controller {
-
     @FXML
     private Button addToHistoryButton;
 
@@ -23,8 +27,13 @@ public class Controller {
     private TextField tariffTextField;
 
     @FXML
-    private ChoiceBox<String> utilityChoiseBox;
+    private ComboBox<String> utilityComboBox;
+    private ComboBoxInitializerWithStringElements comboBoxInitializer;
 
-
+    @FXML
+    void initialize(){
+        comboBoxInitializer = new ComboBoxInitializerWithStringElements(utilityComboBox, List.of("Heating", "Electricity","Water"));
+        comboBoxInitializer.initializeComoBox(0);
+    }
 
 }
