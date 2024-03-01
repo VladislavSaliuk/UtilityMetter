@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,80 +11,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ComboBox?>
-<TabPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.utilitymetter.Controller">
+<TabPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.utilitymetter.Controller">
     <tabs>
-        <Tab closable="false" text="Consumption">
+        <Tab closable="false" text="Consumptions">
          <content>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <TextField fx:id="previousIndicatorTextField" layoutX="225.0" layoutY="131.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Previous" />
-                  <TextField fx:id="currentIndicatorTextField" layoutX="225.0" layoutY="187.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Current" />
-                  <TextField fx:id="tariffTextField" layoutX="14.0" layoutY="187.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Tariff" />
-                  <ComboBox fx:id="utilityComboBox" layoutX="14.0" layoutY="131.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" />
-                  <Text layoutX="137.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your data here ">
+                  <TextField fx:id="previousDayIndicatorTextField" layoutX="24.0" layoutY="132.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Previous" />
+                  <TextField fx:id="currentDayIndicatorTextField" layoutX="24.0" layoutY="187.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Current" />
+                  <ComboBox fx:id="counterComboBox" layoutX="23.0" layoutY="243.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Counter" />
+                  <Text layoutX="187.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consumptions">
                      <font>
                         <Font size="35.0" />
                      </font>
                   </Text>
-                  <Button fx:id="calculateBillButton" layoutX="249.0" layoutY="243.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Calculate" />
-                  <Button fx:id="addToHistoryButton" layoutX="39.0" layoutY="243.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Add to history" />
+                  <Button fx:id="calculateBillButton" layoutX="250.0" layoutY="243.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Calculate" />
+                  <Text layoutX="88.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text layoutX="284.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Night" />
+                  <TextField fx:id="previousNightIndicatorTextField1" layoutX="224.0" layoutY="132.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Previous" />
+                  <TextField fx:id="currentNightIndicatorTextField1" layoutX="224.0" layoutY="187.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Current" />
                </children>
             </AnchorPane>
          </content>
         </Tab>
-      <Tab closable="false" text="Water History">
+      <Tab closable="false" text="Tariffs">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView layoutX="30.0" layoutY="57.0" maxHeight="300.0" maxWidth="540.0" minHeight="300.0" minWidth="540.0" prefHeight="300.0" prefWidth="540.0">
+                  <Text layoutX="253.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tariffs">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Text>
+                  <TextField layoutX="103.0" layoutY="103.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Day" />
+                  <TextField layoutX="103.0" layoutY="165.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Night" />
+                  <TableView layoutX="347.0" layoutY="103.0" maxHeight="150.0" maxWidth="200.0" minHeight="150.0" minWidth="200.0" prefHeight="150.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Previous indicators" />
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Current indicators " />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Tariff" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Biils" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
+                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Day" />
+                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Night" />
                      </columns>
                   </TableView>
-                  <TextField layoutX="30.0" layoutY="14.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Search" />
-                  <Button layoutX="255.0" layoutY="14.0" maxHeight="25.0" maxWidth="90.0" minHeight="25.0" minWidth="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Generate PDF" />
-               </children></AnchorPane>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Electricity History">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TableView layoutX="30.0" layoutY="57.0" maxHeight="300.0" maxWidth="540.0" minHeight="300.0" minWidth="540.0" prefHeight="300.0" prefWidth="540.0">
-                     <columns>
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Previous indicators" />
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Current indicators " />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Tariff" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Biils" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
-                     </columns>
-                  </TableView>
-                  <TextField layoutX="30.0" layoutY="14.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Search" />
-                  <Button layoutX="255.0" layoutY="14.0" maxHeight="25.0" maxWidth="90.0" minHeight="25.0" minWidth="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Generate PDF" />
-               </children>
-            </AnchorPane>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Heating History">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TableView layoutX="30.0" layoutY="57.0" maxHeight="300.0" maxWidth="540.0" minHeight="300.0" minWidth="540.0" prefHeight="300.0" prefWidth="540.0">
-                     <columns>
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Previous indicators" />
-                        <TableColumn maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="Current indicators " />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Tariff" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Biils" />
-                        <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
-                     </columns>
-                  </TableView>
-                  <TextField layoutX="30.0" layoutY="14.0" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="150.0" prefHeight="25.0" prefWidth="150.0" promptText="Search" />
-                  <Button layoutX="255.0" layoutY="14.0" maxHeight="25.0" maxWidth="90.0" minHeight="25.0" minWidth="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Generate PDF" />
+                  <Button layoutX="103.0" layoutY="227.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Add" />
+                  <Button layoutX="193.0" layoutY="227.0" maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Delete" />
                </children>
             </AnchorPane>
         </content>

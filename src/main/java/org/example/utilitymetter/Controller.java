@@ -32,8 +32,7 @@ public class Controller {
 
     @FXML
     void initialize(){
-        comboBoxInitializer = new ComboBoxInitializerWithStringElements(utilityComboBox, List.of("Heating", "Electricity","Water"));
-        comboBoxInitializer.initializeComoBox(0);
+
     }
 
 }
