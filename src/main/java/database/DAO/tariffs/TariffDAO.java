@@ -4,18 +4,18 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
-import database.ConnectionToMongoDB;
+import database.MongoConnection;
 import database.entity.Tariff;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class TariffDAO extends ConnectionToMongoDB implements ITariffDAO {
+public class TariffDAO extends MongoConnection implements ITariffDAO {
     private final String COLLECTION_NAME = "tariffs";
-    private MongoDatabase tariffDatabase;
+    private MongoDatabase database;
     private MongoCollection<Document> tariffCollection;
     public TariffDAO() {
-        tariffDatabase = provideConnectionToDatabase();
-        tariffCollection = tariffDatabase.getCollection(COLLECTION_NAME);
+        database = provideConnectionToDatabase();
+        tariffCollection = database.getCollection(COLLECTION_NAME);
     }
     @Override
     public void add(Tariff tariff) {

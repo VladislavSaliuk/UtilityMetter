@@ -4,7 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 
-public abstract class ConnectionToMongoDB {
+public abstract class MongoConnection {
     private final String LOCALHOST = "localhost";
     private final int PORT = 27017;
     private final String DATABASE_NAME = "UtilityMetterDB";
