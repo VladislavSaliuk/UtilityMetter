@@ -3,6 +3,8 @@ module org.example.utilitymetter {
     requires javafx.fxml;
 
 
-    opens org.example.utilitymetter to javafx.fxml;
-    exports org.example.utilitymetter;
+    opens home to javafx.fxml;
+    exports home;
+    exports home.controllers;
+    opens home.controllers to javafx.fxml;
 }
