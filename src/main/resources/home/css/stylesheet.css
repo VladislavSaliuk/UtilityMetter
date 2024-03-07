@@ -13,3 +13,9 @@
 .button:pressed {
     -fx-background-color: #595e7c;
 }
+
+.table-view .table-column .text {
+    -fx-fill: #ffffff;
+    -fx-font-weight: normal;
+}
+
