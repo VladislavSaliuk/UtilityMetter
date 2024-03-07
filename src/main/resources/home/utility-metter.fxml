@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="parent" stylesheets="@css/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="parent" stylesheets="@css/stylesheet.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.Controller">
    <children>
       <VBox prefHeight="600.0" prefWidth="300.0" styleClass="slydebar">
          <children>
@@ -30,22 +30,22 @@
                   <Insets left="50.0" />
                </padding>
             </Label>
-            <Button fx:id="calculateBillButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0" styleClass="slydebar" text="Calculate bill" textFill="WHITE">
+            <Button styleClass="slydebarButton" fx:id="calculateBillButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0"  text="Calculate bill" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="countersButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0" styleClass="slydebar" text="Counters" textFill="WHITE">
+            <Button styleClass="slydebarButton" fx:id="countersButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0"  text="Counters" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="historyButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0" styleClass="slydebar" text="History" textFill="WHITE">
+            <Button styleClass="slydebarButton" fx:id="historyButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="300.0"  text="History" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="exitButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="50.0" prefWidth="300.0" styleClass="slydebar" text="Exit" textFill="WHITE">
+            <Button styleClass="slydebarButton" fx:id="exitButton" alignment="BASELINE_LEFT" contentDisplay="CENTER" layoutX="10.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="50.0" prefWidth="300.0"  text="Exit" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -79,8 +79,8 @@
                     <columns>
                       <TableColumn prefWidth="200.0" text="Meter number" />
                       <TableColumn prefWidth="150.0" text="Day tariff" />
-                        <TableColumn prefWidth="150.0" text="Night tariff" />
-                        <TableColumn prefWidth="200.0" text="Date" />
+                       <TableColumn prefWidth="150.0" text="Night tariff" />
+                       <TableColumn prefWidth="200.0" text="Date" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="30.0" prefWidth="700.0" spacing="5.0">
@@ -90,12 +90,12 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <ChoiceBox prefHeight="25.0" prefWidth="100.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Refresh" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Add" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Delete" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Edit" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Clear" textFill="#333645" />
+                        <ChoiceBox styleClass="countersTableSearchComboBox" prefHeight="25.0" prefWidth="100.0"/>
+                        <Button text="Refresh" styleClass="countersTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"/>
+                        <Button text="Add" styleClass="countersTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"/>
+                        <Button text="Edit" styleClass="countersTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"/>
+                        <Button text="Delete" styleClass="countersTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"/>
+                        <Button text="Clear" styleClass="countersTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"/>
                      </children>
                   </HBox>
                </children>
@@ -123,12 +123,12 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <ChoiceBox prefHeight="25.0" prefWidth="100.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Refresh" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Add" textFill="#333645" />
-                        <Button layoutX="446.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Report" textFill="#333645" />
-                        <Button layoutX="446.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Delete" textFill="#333645" />
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" text="Clear" textFill="#333645" />
+                        <ChoiceBox styleClass="historyTableSearchComboBox"  prefHeight="25.0" prefWidth="100.0"/>
+                        <Button styleClass="historyTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Refresh" />
+                        <Button styleClass="historyTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Add"/>
+                        <Button styleClass="historyTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Report"/>
+                        <Button styleClass="historyTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Delete"/>
+                        <Button styleClass="historyTableButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0"  text="Clear"/>
                      </children>
                   </HBox>
                </children>
@@ -146,9 +146,9 @@
                      <children>
                         <TextField layoutX="276.0" layoutY="114.0" promptText="Day consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
                         <TextField layoutX="276.0" layoutY="41.0" promptText="Night consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
-                        <Button layoutX="310.0" layoutY="182.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #00A2D3;" text="Calculate" textFill="WHITE" />
-                        <ComboBox layoutX="69.0" layoutY="14.0" prefWidth="150.0" promptText="Meter" style="-fx-background-color: WHITE; -fx-border-color: #00A2D3; -fx-border-radius: 5px;" />
-                        <Button layoutX="275.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: transparent;" text="Add to history">
+                        <Button  styleClass = "calculateButton" layoutX="310.0" layoutY="182.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Calculate" textFill="WHITE" />
+                        <ComboBox styleClass="meterComboBox" layoutX="69.0" layoutY="14.0" prefWidth="150.0" promptText="Meter" />
+                        <Button styleClass="addToHistoryButton" layoutX="275.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Add to history">
                            <font>
                               <Font size="14.0" />
                            </font>
