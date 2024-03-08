@@ -19,10 +19,10 @@
     <children>
         <TableView fx:id="countersTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn prefWidth="200.0" text="Meter number" />
-                <TableColumn prefWidth="150.0" text="Day tariff" />
-                <TableColumn prefWidth="150.0" text="Night tariff" />
-                <TableColumn prefWidth="200.0" text="Date" />
+                <TableColumn styleClass="countersTableColumn" prefWidth="200.0" text="Meter number" />
+                <TableColumn styleClass="countersTableColumn" prefWidth="150.0" text="Day tariff" />
+                <TableColumn styleClass="countersTableColumn" prefWidth="150.0" text="Night tariff" />
+                <TableColumn styleClass="countersTableColumn" prefWidth="200.0" text="Date" />
             </columns>
         </TableView>
         <HBox prefHeight="30.0" prefWidth="700.0" spacing="5.0">

@@ -75,6 +75,10 @@
     -fx-text-fill: #5D7C59FF;
 }
 
+.countersTableColumn {
+    -fx-background-color: #5D7C59FF;
+}
+
 .countersTableSearchComboBox{
     -fx-border-color: #22242d;
     -fx-background-color: transparent;
@@ -89,6 +93,10 @@
     -fx-border-radius: 0px;
     -fx-background-color: transparent;
     -fx-border-color: #22242d;
+}
+
+.historyTableColumn{
+    -fx-background-color: #7C557CFF;
 }
 
 .historyTableButton:hover {

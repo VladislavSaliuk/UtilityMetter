@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="calculateBillGridPane" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: WHITE;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.BillCalculationController">
+<GridPane fx:id="calculateBillGridPane" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: WHITE;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="home.controllers.BillCalculationController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -23,14 +23,14 @@
             <children>
                 <TextField fx:id="dayConsumingTextField" layoutX="276.0" layoutY="44.0" promptText="Day consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
                 <TextField fx:id="nightConsumingTextField" layoutX="276.0" layoutY="110.0" promptText="Night consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
-                <Button fx:id="calculateButton" layoutX="310.0" layoutY="174.0" mnemonicParsing="false" onAction="#calculacteTotalBill" prefHeight="30.0" prefWidth="80.0" styleClass="calculateButton" text="Calculate" textFill="WHITE" />
+                <Button fx:id="calculateButton" layoutX="310.0" layoutY="174.0" mnemonicParsing="false" onAction="#calculateTotalBillAction" prefHeight="30.0" prefWidth="80.0" styleClass="calculateButton" text="Calculate" textFill="WHITE" />
                 <ComboBox layoutX="69.0" prefWidth="150.0" promptText="Meter" styleClass="meterComboBox" />
                 <Button layoutX="275.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="addToHistoryButton" text="Add to history">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Label fx:id="calculationResultLabel" layoutX="266.0" layoutY="254.0" prefHeight="27.0" prefWidth="434.0" textAlignment="JUSTIFY" wrapText="true">
+                <Label fx:id="calculationResultLabel" layoutY="248.0" prefHeight="27.0" prefWidth="700.0" textAlignment="CENTER">
                     <font>
                         <Font size="14.0" />
                     </font>

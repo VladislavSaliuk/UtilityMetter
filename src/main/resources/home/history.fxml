@@ -19,9 +19,9 @@
     <children>
         <TableView fx:id="historyTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn prefWidth="300.0" text="Meter number" />
-                <TableColumn prefWidth="200.0" text="Bill" />
-                <TableColumn prefWidth="200.0" text="Pay date" />
+                <TableColumn styleClass="historyTableColumn" prefWidth="300.0" text="Meter number" />
+                <TableColumn styleClass="historyTableColumn" prefWidth="200.0" text="Bill" />
+                <TableColumn styleClass="historyTableColumn" prefWidth="200.0" text="Pay date" />
             </columns>
         </TableView>
         <HBox prefHeight="30.0" prefWidth="700.0" spacing="5.0">

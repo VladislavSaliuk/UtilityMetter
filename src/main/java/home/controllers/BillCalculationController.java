@@ -3,8 +3,10 @@ package home.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import logic.MetterCalculator;
 
 import java.net.URL;
@@ -13,28 +15,50 @@ import java.util.ResourceBundle;
 public class BillCalculationController implements Initializable {
     @FXML
     private TextField dayConsumingTextField;
+
     @FXML
     private TextField nightConsumingTextField;
+
     @FXML
     private Label calculationResultLabel;
-    private MetterCalculator metterCalculator;
+
+    private MetterCalculator meterCalculator;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        metterCalculator = new MetterCalculator();
+        meterCalculator = new MetterCalculator();
     }
 
     @FXML
-    public void calculacteTotalBill(ActionEvent event){
-        try {
-            metterCalculator.setDayTariffValue(0.15);
-            metterCalculator.setNightTariffValue(0.1);
-            double consumedEnergyDuringDayPeriod = Double.parseDouble(dayConsumingTextField.getText());
-            double consumedEnergyDuringNightPeriod = Double.parseDouble(nightConsumingTextField.getText());
-            metterCalculator.setConsumedEnergyDuringDayPeriod(consumedEnergyDuringDayPeriod);
-            metterCalculator.setConsumedEnergyDuringNightPeriod(consumedEnergyDuringNightPeriod);
-            calculationResultLabel.setText("Your total bill count is " + metterCalculator.calculateTotalBill() + " $");
-        } catch (NumberFormatException e) {
-            calculationResultLabel.setText("Please enter numeric values for energy consumption.");
+    public void calculateTotalBillAction(ActionEvent event) {
+        if (dayConsumingTextField.getText().isEmpty() || nightConsumingTextField.getText().isEmpty()) {
+            displayMessage("Please fill in all textfields!", Color.color(1,0,0));
+        } else {
+            try {
+                calculateTotalBill();
+            } catch (NumberFormatException e) {
+                displayMessage("Please enter numeric values for energy consumption!",Color.color(1,0,0));
+            }
         }
     }
+    private void calculateTotalBill(){
+        double dayTariffValue = 0.15;
+        double nightTariffValue = 0.1;
+        double consumedEnergyDuringDayPeriod = Double.parseDouble(dayConsumingTextField.getText());
+        double consumedEnergyDuringNightPeriod = Double.parseDouble(nightConsumingTextField.getText());
+        meterCalculator.setDayTariffValue(dayTariffValue);
+        meterCalculator.setNightTariffValue(nightTariffValue);
+        meterCalculator.setConsumedEnergyDuringDayPeriod(consumedEnergyDuringDayPeriod);
+        meterCalculator.setConsumedEnergyDuringNightPeriod(consumedEnergyDuringNightPeriod);
+        String resultMessage = "Your total bill count is " + meterCalculator.calculateTotalBill() + " $";
+        displayMessage(resultMessage,Color.color(0,0,0));
+    }
+    private void displayMessage(String message, Color fontColor) {
+        calculationResultLabel.setTextFill(fontColor);
+        calculationResultLabel.setAlignment(Pos.CENTER);
+        calculationResultLabel.setText(message);
+    }
+
+
+
 }
