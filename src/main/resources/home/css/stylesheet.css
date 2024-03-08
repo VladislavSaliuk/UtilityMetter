@@ -1,0 +1,106 @@
+.parent {
+    -fx-background-color: #fff;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+}
+
+.slydebar {
+    -fx-background-color: #333645
+}
+
+.slydebarButton {
+    -fx-background-color: #333645;
+    -fx-border-radius: 0;
+}
+
+.slydebarButton.button:hover {
+    -fx-background-color: #22242d;
+}
+
+.slydebarButton.button:pressed {
+    -fx-background-color: #595e7c;
+}
+
+.table-view .table-column .text {
+    -fx-fill: #ffffff;
+    -fx-font-weight: normal;
+}
+
+.calculateButton {
+    -fx-background-color: #00A2D3FF;
+}
+
+.calculateButton:hover {
+    -fx-background-color: #044b64;
+}
+
+.calculateButton:pressed {
+    -fx-background-color: #00A2D3FF;
+}
+
+.meterComboBox {
+    -fx-background-color: transparent;
+    -fx-border-color: #00A2D3;
+    -fx-border-radius: 5px;
+}
+
+.meterComboBox:hover {
+    -fx-border-color: #d70d0d;
+    -fx-cursor: hand;
+}
+
+.addToHistoryButton {
+    -fx-background-color: transparent;
+}
+
+.addToHistoryButton:hover {
+    -fx-text-fill: #00A2D3;
+}
+
+.addToHistoryButton:pressed {
+    -fx-text-fill: #00A2D3;
+}
+
+.countersTableButton {
+    -fx-text-fill: #22242d;
+    -fx-border-radius: 0px;
+    -fx-background-color: transparent;
+    -fx-border-color: #22242d;
+}
+
+.countersTableButton:hover {
+    -fx-border-color: #5D7C59FF;
+    -fx-text-fill: #5D7C59FF;
+}
+
+.countersTableSearchComboBox{
+    -fx-border-color: #22242d;
+    -fx-background-color: transparent;
+}
+.countersTableSearchComboBox:hover{
+    -fx-border-color: #5D7C59FF;
+    -fx-cursor: hand;
+}
+
+.historyTableButton {
+    -fx-text-fill: #22242d;
+    -fx-border-radius: 0px;
+    -fx-background-color: transparent;
+    -fx-border-color: #22242d;
+}
+
+.historyTableButton:hover {
+    -fx-border-color: #7C557CFF;
+    -fx-text-fill: #7C557CFF;
+}
+
+.historyTableSearchComboBox{
+    -fx-border-color: #22242d;
+    -fx-background-color: transparent;
+}
+.historyTableSearchComboBox:hover{
+    -fx-border-color: #7C557CFF;
+    -fx-cursor: hand;
+}
