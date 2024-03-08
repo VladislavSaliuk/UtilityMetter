@@ -1,4 +1,4 @@
-package org.example.utilitymetter;
+package home;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ public class UtilityMetterApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UtilityMetterApplication.class.getResource("utility-metter.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("Utility metter");
         stage.setResizable(false);
         stage.setScene(scene);
