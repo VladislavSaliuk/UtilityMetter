@@ -19,9 +19,10 @@ public class MetterCalculator {
         return consumedEnergyDuringDayPeriod * dayTariffValue + consumedEnergyDuringNightPeriod * nightTariffValue;
     }
     public double calculateTotalBill(double markup){
-        double markupValue = calculateTotalBill() * markup;
-        double billValue = calculateTotalBill() + markupValue;
-        return billValue;
+        double totalBillValueWithoutMarkup = calculateTotalBill();
+        double markupValue = totalBillValueWithoutMarkup * markup * 0.01;
+        double totaBillValueWithMarkup = calculateTotalBill() + markupValue;
+        return totaBillValueWithMarkup;
     }
     public double getConsumedEnergyDuringDayPeriod() {
         return consumedEnergyDuringDayPeriod;
