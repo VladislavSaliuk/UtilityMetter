@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import logic.MetterCalculator;
 
@@ -13,6 +15,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BillCalculationController implements Initializable {
+    @FXML
+    private Slider markupSlider;
+
     @FXML
     private TextField dayConsumingTextField;
 
@@ -22,11 +27,14 @@ public class BillCalculationController implements Initializable {
     @FXML
     private Label calculationResultLabel;
 
+    @FXML
+    private Label markupLabel;
     private MetterCalculator meterCalculator;
-
+    private int markupValue;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         meterCalculator = new MetterCalculator();
+        markupLabel.setText("Markup " + markupValue + "%");
     }
 
     @FXML
@@ -59,6 +67,10 @@ public class BillCalculationController implements Initializable {
         calculationResultLabel.setText(message);
     }
 
-
+    @FXML
+    public void updateText(MouseEvent event) {
+        int value = (int) markupSlider.getValue();
+        markupLabel.setText("Markup " + value + "%");
+    }
 
 }
