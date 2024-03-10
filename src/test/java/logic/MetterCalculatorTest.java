@@ -1,6 +1,5 @@
 package logic;
 
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,13 +10,13 @@ public class MetterCalculatorTest {
     @Test
     void calculateTotalBill_shouldReturnCorrectBillValue_whenInputWithNoZeros(){
         MetterCalculator metterCalculator = new MetterCalculator(100,0.15,50,0.1);
-        assertEquals(20,metterCalculator.calculateTotalBill());
+        assertEquals(20,metterCalculator.calculateTotalBill(0));
     }
 
     @Test
     void calculateTotalBill_shouldReturnZero_whenInputContainsOnlyZeros(){
         MetterCalculator metterCalculator = new MetterCalculator(0,0,0,0);
-        assertEquals(0, metterCalculator.calculateTotalBill());
+        assertEquals(0, metterCalculator.calculateTotalBill(0));
     }
 
     @Test
@@ -29,7 +28,7 @@ public class MetterCalculatorTest {
     @Test
     void calculateTotalBill_shouldReturnSameCorrectBillValue_whenInputWithNoZeroValuesButMarkupValueIsZero(){
         MetterCalculator metterCalculator= new MetterCalculator(100,0.15,50,0.1);
-        boolean isBillEqual = metterCalculator.calculateTotalBill() == metterCalculator.calculateTotalBill(0);
+        boolean isBillEqual = metterCalculator.calculateTotalBill(0) == metterCalculator.calculateTotalBill(0);
         assertTrue(isBillEqual);
     }
 
@@ -42,7 +41,7 @@ public class MetterCalculatorTest {
     @Test
     void calculateTotalBill_shouldReturnZero_whenTariffsAreZeros(){
         MetterCalculator metterCalculator = new MetterCalculator(100,0,50,0);
-        assertEquals(0, metterCalculator.calculateTotalBill());
+        assertEquals(0, metterCalculator.calculateTotalBill(0));
     }
 
 }

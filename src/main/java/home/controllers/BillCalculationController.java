@@ -58,7 +58,7 @@ public class BillCalculationController implements Initializable {
         meterCalculator.setNightTariffValue(nightTariffValue);
         meterCalculator.setConsumedEnergyDuringDayPeriod(consumedEnergyDuringDayPeriod);
         meterCalculator.setConsumedEnergyDuringNightPeriod(consumedEnergyDuringNightPeriod);
-        String resultMessage = "Your total bill count is " + meterCalculator.calculateTotalBill() + " $";
+        String resultMessage = "Your total bill count is " + meterCalculator.calculateTotalBill(markupValue) + " $";
         displayMessage(resultMessage,Color.color(0,0,0));
     }
     private void displayMessage(String message, Color fontColor) {
@@ -70,6 +70,7 @@ public class BillCalculationController implements Initializable {
     @FXML
     public void updateText(MouseEvent event) {
         int value = (int) markupSlider.getValue();
+        markupValue = value;
         markupLabel.setText("Markup " + value + "%");
     }
 

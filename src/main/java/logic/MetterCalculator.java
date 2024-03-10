@@ -15,13 +15,10 @@ public class MetterCalculator {
         this.nightTariffValue = nightTariffValue;
     }
 
-    public double calculateTotalBill(){
-        return consumedEnergyDuringDayPeriod * dayTariffValue + consumedEnergyDuringNightPeriod * nightTariffValue;
-    }
-    public double calculateTotalBill(double markup){
-        double totalBillValueWithoutMarkup = calculateTotalBill();
+    public double calculateTotalBill(int markup){
+        double totalBillValueWithoutMarkup = consumedEnergyDuringDayPeriod * dayTariffValue + consumedEnergyDuringNightPeriod * nightTariffValue;
         double markupValue = totalBillValueWithoutMarkup * markup * 0.01;
-        double totaBillValueWithMarkup = calculateTotalBill() + markupValue;
+        double totaBillValueWithMarkup = totalBillValueWithoutMarkup + markupValue;
         return totaBillValueWithMarkup;
     }
     public double getConsumedEnergyDuringDayPeriod() {
