@@ -54,10 +54,10 @@ public class BillCalculationController implements Initializable {
         double nightTariffValue = 0.1;
         double consumedEnergyDuringDayPeriod = Double.parseDouble(dayConsumingTextField.getText());
         double consumedEnergyDuringNightPeriod = Double.parseDouble(nightConsumingTextField.getText());
-        meterCalculator.setDayTariffValue(dayTariffValue);
-        meterCalculator.setNightTariffValue(nightTariffValue);
-        meterCalculator.setConsumedEnergyDuringDayPeriod(consumedEnergyDuringDayPeriod);
-        meterCalculator.setConsumedEnergyDuringNightPeriod(consumedEnergyDuringNightPeriod);
+        meterCalculator.setDayTariff(dayTariffValue);
+        meterCalculator.setNightTariff(nightTariffValue);
+        meterCalculator.setDayEnergyConsumption(consumedEnergyDuringDayPeriod);
+        meterCalculator.setNightEnergyConsumption(consumedEnergyDuringNightPeriod);
         String resultMessage = "Your total bill count is " + meterCalculator.calculateTotalBill(markupValue) + " $";
         displayMessage(resultMessage,Color.color(0,0,0));
     }

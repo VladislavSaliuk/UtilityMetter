@@ -1,55 +1,64 @@
 package logic;
 
 public class MetterCalculator {
-    private double consumedEnergyDuringDayPeriod;
-    private double dayTariffValue;
-    private double consumedEnergyDuringNightPeriod;
-    private double nightTariffValue;
+    private double dayEnergyConsumption;
+    private double dayTariff;
+    private double nightEnergyConsumption;
+    private double nightTariff;
+
     public MetterCalculator() {
 
     }
-    public MetterCalculator(double consumedEnergyDuringDayPeriod, double dayTariffValue, double consumedEnergyDuringNightPeriod, double nightTariffValue) {
-        this.consumedEnergyDuringDayPeriod = consumedEnergyDuringDayPeriod;
-        this.dayTariffValue = dayTariffValue;
-        this.consumedEnergyDuringNightPeriod = consumedEnergyDuringNightPeriod;
-        this.nightTariffValue = nightTariffValue;
+
+    public MetterCalculator(double dayEnergyConsumption, double dayTariff, double nightEnergyConsumption, double nightTariff) {
+        if (dayEnergyConsumption < 0 || dayTariff < 0 || nightEnergyConsumption < 0 || nightTariff < 0) {
+            throw new IllegalArgumentException("Energy consumption and tariff values must be non-negative.");
+        }
+        if (dayTariff == 0 || nightTariff == 0) {
+            throw new IllegalArgumentException("Tariff values cannot be zero.");
+        }
+        this.dayEnergyConsumption = dayEnergyConsumption;
+        this.dayTariff = dayTariff;
+        this.nightEnergyConsumption = nightEnergyConsumption;
+        this.nightTariff = nightTariff;
     }
 
-    public double calculateTotalBill(int markup){
-        double totalBillValueWithoutMarkup = consumedEnergyDuringDayPeriod * dayTariffValue + consumedEnergyDuringNightPeriod * nightTariffValue;
-        double markupValue = totalBillValueWithoutMarkup * markup * 0.01;
-        double totaBillValueWithMarkup = totalBillValueWithoutMarkup + markupValue;
-        return totaBillValueWithMarkup;
-    }
-    public double getConsumedEnergyDuringDayPeriod() {
-        return consumedEnergyDuringDayPeriod;
+    public double calculateTotalBill(int markupPercentage) {
+        double totalBillWithoutMarkup = (dayEnergyConsumption * dayTariff) + (nightEnergyConsumption * nightTariff);
+        double markup = (double) markupPercentage / 100;
+        double markupValue = totalBillWithoutMarkup * markup;
+        return totalBillWithoutMarkup + markupValue;
     }
 
-    public void setConsumedEnergyDuringDayPeriod(double consumedEnergyDuringDayPeriod) {
-        this.consumedEnergyDuringDayPeriod = consumedEnergyDuringDayPeriod;
+    public double getDayEnergyConsumption() {
+        return dayEnergyConsumption;
     }
 
-    public double getDayTariffValue() {
-        return dayTariffValue;
+    public void setDayEnergyConsumption(double dayEnergyConsumption) {
+        this.dayEnergyConsumption = dayEnergyConsumption;
     }
 
-    public void setDayTariffValue(double dayTariffValue) {
-        this.dayTariffValue = dayTariffValue;
+    public double getDayTariff() {
+        return dayTariff;
     }
 
-    public double getConsumedEnergyDuringNightPeriod() {
-        return consumedEnergyDuringNightPeriod;
+    public void setDayTariff(double dayTariff) {
+        this.dayTariff = dayTariff;
     }
 
-    public void setConsumedEnergyDuringNightPeriod(double consumedEnergyDuringNightPeriod) {
-        this.consumedEnergyDuringNightPeriod = consumedEnergyDuringNightPeriod;
+    public double getNightEnergyConsumption() {
+        return nightEnergyConsumption;
     }
 
-    public double getNightTariffValue() {
-        return nightTariffValue;
+    public void setNightEnergyConsumption(double nightEnergyConsumption) {
+        this.nightEnergyConsumption = nightEnergyConsumption;
     }
 
-    public void setNightTariffValue(double nightTariffValue) {
-        this.nightTariffValue = nightTariffValue;
+    public double getNightTariff() {
+        return nightTariff;
+    }
+
+    public void setNightTariff(double nightTariff) {
+        this.nightTariff = nightTariff;
     }
 }
