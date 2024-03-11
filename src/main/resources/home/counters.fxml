@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="countersGridPane" prefHeight="400.0" prefWidth="699.0" style="-fx-background-color: WHITE;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="home.controllers.CountersController">
+<GridPane fx:id="countersGridPane" prefHeight="400.0" prefWidth="699.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.CountersController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -20,12 +20,11 @@
         <RowConstraints maxHeight="366.8000061035156" minHeight="10.0" prefHeight="363.99998779296874" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <TableView styleClass="countersTable" fx:id="countersTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
+        <TableView fx:id="countersTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn fx:id="meterNumberTableColumn" prefWidth="200.0"  text="Meter number" />
-                <TableColumn fx:id="dayTariffTableColumn" prefWidth="150.0"  text="Day tariff" />
-                <TableColumn fx:id="nightTariffTableColumn" prefWidth="150.0" text="Night tariff" />
-                <TableColumn fx:id="dateTableColumn" prefWidth="200.0"  text="Date" />
+                <TableColumn fx:id="meterNumberTableColumn" prefWidth="200.0" text="Meter number" />
+                <TableColumn fx:id="dayTariffTableColumn" prefWidth="250.0" text="Day tariff" />
+                <TableColumn fx:id="nightTariffTableColumn" prefWidth="250.0" text="Night tariff" />
             </columns>
         </TableView>
         <HBox prefHeight="30.0" prefWidth="700.0" spacing="5.0">
@@ -36,11 +35,11 @@
                     </HBox.margin>
                 </TextField>
                 <ChoiceBox prefHeight="25.0" prefWidth="100.0" styleClass="countersTableSearchComboBox" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Refresh" />
+                <Button mnemonicParsing="false" onAction="#refreshTable" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Refresh" />
                 <Button mnemonicParsing="false" onAction="#addCounterButton" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Add" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Edit" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Delete" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Clear" />
+                <Button mnemonicParsing="false" onAction="#editCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Edit" />
+                <Button mnemonicParsing="false" onAction="#deleteCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Delete" />
+                <Button mnemonicParsing="false" onAction="#clearTable" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Clear" />
             </children>
         </HBox>
     </children>

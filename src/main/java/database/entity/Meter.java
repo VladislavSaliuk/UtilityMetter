@@ -2,11 +2,14 @@ package database.entity;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
 public class Meter {
     private ObjectId meterID;
     private String meterNumber;
     private double dayTariffValue;
     private double nightTariffValue;
+
     public Meter() {
 
     }

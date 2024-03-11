@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class CountersController implements Initializable {
     @FXML
-    private TableView countersTableView;
+    private TableView<Meter> countersTableView;
 
     @FXML
     private TableColumn<Meter, String> meterNumberTableColumn;
@@ -34,18 +34,10 @@ public class CountersController implements Initializable {
 
     @FXML
     private TableColumn<Meter, Double> nightTariffTableColumn;
-
-    @FXML
-    private TableColumn<Meter, Date> dateTableColumn;
     private MeterDAO meterDAO;
-
     private ObservableList<Meter> observableList =  FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setHeaderColumnStyle(meterNumberTableColumn);
-        setHeaderColumnStyle(dayTariffTableColumn);
-        setHeaderColumnStyle(nightTariffTableColumn);
-        setHeaderColumnStyle(dateTableColumn);
         meterDAO = new MeterDAO();
         observableList.addAll(meterDAO.getItems());
         meterNumberTableColumn.setCellValueFactory(new PropertyValueFactory<Meter, String>("meterNumber"));
@@ -59,12 +51,37 @@ public class CountersController implements Initializable {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(UtilityMetterApplication.class.getResource("add-counter.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 300);
-        stage.setTitle("Utility metter");
+        stage.setTitle("Add meter");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
-    private void setHeaderColumnStyle(TableColumn<?, ?> column) {
-        column.getStyleClass().add("countersTableColumnHeader");
+    @FXML
+    public void refreshTable(ActionEvent event){
+        observableList =  FXCollections.observableArrayList(meterDAO.getItems());
+        countersTableView.setItems(observableList);
+    }
+    @FXML
+    public void clearTable(ActionEvent event){
+        countersTableView.getItems().clear();
+        meterDAO.clear();
+    }
+    @FXML
+    public void deleteCounter(ActionEvent event){
+        Meter selectedMeter = countersTableView.getSelectionModel().getSelectedItem();
+        countersTableView.getItems().remove(selectedMeter);
+        meterDAO.delete(selectedMeter.getMeterID());
+    }
+    @FXML
+    public void editCounter(ActionEvent event) throws IOException {
+        Meter selectedMeter = countersTableView.getSelectionModel().getSelectedItem();
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(UtilityMetterApplication.class.getResource("edit-counter.fxml"));
+        fxmlLoader.setController(new EditCounterController(selectedMeter));
+        Scene scene = new Scene(fxmlLoader.load(), 300, 300);
+        stage.setTitle("Edit meter");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 }

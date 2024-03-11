@@ -4,6 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import database.MongoConnection;
 import database.entity.Meter;
@@ -34,8 +35,8 @@ public class MeterDAO extends MongoConnection implements IMeterDAO {
     }
 
     @Override
-    public void delete(String meterID) {
-        DeleteResult deleteResult = metersCollection.deleteOne(Filters.eq("_id",new ObjectId(meterID)));
+    public void delete(ObjectId meterID) {
+        DeleteResult deleteResult = metersCollection.deleteOne(Filters.eq("_id",meterID));
         System.out.println("Succesfully deleted " + deleteResult.getDeletedCount() + "documents!");
     }
 
@@ -61,4 +62,12 @@ public class MeterDAO extends MongoConnection implements IMeterDAO {
         }
         return meterList;
     }
+
+    @Override
+    public void edit(Meter meter) {
+        metersCollection.updateOne(Filters.eq("_id", meter.getMeterID()), Updates.set("Meter number", meter.getMeterNumber()));
+        metersCollection.updateOne(Filters.eq("_id", meter.getMeterID()), Updates.set("Day tariff", meter.getDayTariffValue()));
+        metersCollection.updateOne(Filters.eq("_id", meter.getMeterID()), Updates.set("Night tariff", meter.getNightTariffValue()));
+    }
+
 }

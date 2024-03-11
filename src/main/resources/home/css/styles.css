@@ -58,11 +58,6 @@
     -fx-text-fill: #00A2D3;
 }
 
-.countersTable{
-    -fx-background-color: #5D7C59FF;
-    -fx-font-weight: normal;
-}
-
 
 .countersTableButton {
     -fx-text-fill: #22242d;
