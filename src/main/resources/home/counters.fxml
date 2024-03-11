@@ -34,7 +34,7 @@
                 </TextField>
                 <ChoiceBox prefHeight="25.0" prefWidth="100.0" styleClass="countersTableSearchComboBox" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Refresh" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Add" />
+                <Button mnemonicParsing="false" onAction="#addCounterButton" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Add" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Edit" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Delete" />
                 <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Clear" />
