@@ -7,4 +7,7 @@ module org.example.utilitymetter {
     exports home;
     exports home.controllers;
     opens home.controllers to javafx.fxml;
+
+    opens database.entity to javafx.base;
+    exports database.entity;
 }

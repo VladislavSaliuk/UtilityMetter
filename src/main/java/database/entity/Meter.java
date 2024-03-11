@@ -1,14 +1,17 @@
 package database.entity;
 
+import org.bson.types.ObjectId;
+
 public class Meter {
-    private String meterID;
+    private ObjectId meterID;
     private String meterNumber;
     private double dayTariffValue;
     private double nightTariffValue;
     public Meter() {
 
     }
-    public Meter(String meterNumber, double dayTariffValue, double nightTariffValue) {
+    public Meter(ObjectId meterID, String meterNumber, double dayTariffValue, double nightTariffValue) {
+        this.meterID = meterID;
         this.meterNumber = meterNumber;
         this.dayTariffValue = dayTariffValue;
         this.nightTariffValue = nightTariffValue;
@@ -19,18 +22,11 @@ public class Meter {
         return meterNumber;
     }
 
-    public Meter(String meterID, String meterNumber, double dayTariffValue, double nightTariffValue) {
-        this.meterID = meterID;
-        this.meterNumber = meterNumber;
-        this.dayTariffValue = dayTariffValue;
-        this.nightTariffValue = nightTariffValue;
-    }
-
-    public String getMeterID() {
+    public ObjectId getMeterID() {
         return meterID;
     }
 
-    public void setMeterID(String meterID) {
+    public void setMeterID(ObjectId meterID) {
         this.meterID = meterID;
     }
 

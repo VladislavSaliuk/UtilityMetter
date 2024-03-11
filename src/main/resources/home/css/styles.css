@@ -23,11 +23,6 @@
     -fx-background-color: #595e7c;
 }
 
-.table-view .table-column .text {
-    -fx-fill: #ffffff;
-    -fx-font-weight: normal;
-}
-
 .calculateButton {
     -fx-background-color: #00A2D3FF;
 }
@@ -63,6 +58,12 @@
     -fx-text-fill: #00A2D3;
 }
 
+.countersTable{
+    -fx-background-color: #5D7C59FF;
+    -fx-font-weight: normal;
+}
+
+
 .countersTableButton {
     -fx-text-fill: #22242d;
     -fx-border-radius: 0px;
@@ -75,9 +76,6 @@
     -fx-text-fill: #5D7C59FF;
 }
 
-.countersTableColumn {
-    -fx-background-color: #5D7C59FF;
-}
 
 .countersTableSearchComboBox{
     -fx-border-color: #22242d;
@@ -93,10 +91,6 @@
     -fx-border-radius: 0px;
     -fx-background-color: transparent;
     -fx-border-color: #22242d;
-}
-
-.historyTableColumn{
-    -fx-background-color: #7C557CFF;
 }
 
 .historyTableButton:hover {
