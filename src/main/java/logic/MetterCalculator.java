@@ -11,12 +11,6 @@ public class MetterCalculator {
     }
 
     public MetterCalculator(double dayEnergyConsumption, double dayTariff, double nightEnergyConsumption, double nightTariff) {
-        if (dayEnergyConsumption < 0 || dayTariff < 0 || nightEnergyConsumption < 0 || nightTariff < 0) {
-            throw new IllegalArgumentException("Energy consumption and tariff values must be non-negative.");
-        }
-        if (dayTariff == 0 || nightTariff == 0) {
-            throw new IllegalArgumentException("Tariff values cannot be zero.");
-        }
         this.dayEnergyConsumption = dayEnergyConsumption;
         this.dayTariff = dayTariff;
         this.nightEnergyConsumption = nightEnergyConsumption;
@@ -24,6 +18,9 @@ public class MetterCalculator {
     }
 
     public double calculateTotalBill(int markupPercentage) {
+        if (dayEnergyConsumption < 0 || dayTariff < 0 || nightEnergyConsumption < 0 || nightTariff < 0) {
+            throw new IllegalArgumentException("Energy consumption and tariff values must be non-negative.");
+        }
         double totalBillWithoutMarkup = (dayEnergyConsumption * dayTariff) + (nightEnergyConsumption * nightTariff);
         double markup = (double) markupPercentage / 100;
         double markupValue = totalBillWithoutMarkup * markup;
