@@ -6,6 +6,8 @@ import home.UtilityMetterApplication;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -34,6 +37,8 @@ public class CountersController implements Initializable {
 
     @FXML
     private TableColumn<Meter, Double> nightTariffTableColumn;
+    @FXML
+    private TextField countersSearchFilter;
     private MeterDAO meterDAO;
     private ObservableList<Meter> observableList =  FXCollections.observableArrayList();
     @Override
@@ -44,6 +49,23 @@ public class CountersController implements Initializable {
         dayTariffTableColumn.setCellValueFactory(new PropertyValueFactory<Meter, Double>("dayTariffValue"));
         nightTariffTableColumn.setCellValueFactory(new PropertyValueFactory<Meter,Double>("nightTariffValue"));
         countersTableView.setItems(observableList);
+
+        FilteredList<Meter> filteredList = new FilteredList<>(observableList, b -> true);
+        countersSearchFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(meter -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return meter.getMeterNumber().toLowerCase().contains(lowerCaseFilter) ||
+                        Double.toString(meter.getDayTariffValue()).toLowerCase().contains(lowerCaseFilter) ||
+                        Double.toString(meter.getNightTariffValue()).toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<Meter> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(countersTableView.comparatorProperty());
+        countersTableView.setItems(sortedData);
     }
 
     @FXML
@@ -84,4 +106,5 @@ public class CountersController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 }
