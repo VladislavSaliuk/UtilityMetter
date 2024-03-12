@@ -42,9 +42,9 @@ public class EditCounterController implements Initializable {
     public void editCounter(ActionEvent event){
         Meter meter = new Meter();
         meter.setMeterID(editedMeter.getMeterID());
-        meter.setMeterNumber(metterNumberTextField.getText()); // Оновлення номера лічильника
-        meter.setDayTariffValue(Double.parseDouble(dayTariffTextField.getText())); // Оновлення денного тарифу
-        meter.setNightTariffValue(Double.parseDouble(nightTariffTextField.getText())); // Оновлення нічного тарифу
+        meter.setMeterNumber(metterNumberTextField.getText());
+        meter.setDayTariffValue(Double.parseDouble(dayTariffTextField.getText()));
+        meter.setNightTariffValue(Double.parseDouble(nightTariffTextField.getText()));
         meterDAO.edit(meter);
     }
 }

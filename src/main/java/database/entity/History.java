@@ -1,33 +1,37 @@
 package database.entity;
 
+import org.bson.types.ObjectId;
+
 import java.util.Date;
 
 public class History {
-    private String historyID;
+    private ObjectId historyID;
     private String meterNumber;
-    private int billValue;
-    private Date payDate;
+    private double billValue;
+    private String payDate;
 
     public History() {
 
     }
-    public History(String meterNumber, int billValue, Date payDate) {
+
+    public History(String meterNumber, double billValue, String payDate) {
         this.meterNumber = meterNumber;
         this.billValue = billValue;
         this.payDate = payDate;
     }
-    public History(String historyID, String meterNumber, int billValue, Date payDate) {
+
+    public History(ObjectId historyID, String meterNumber, double billValue, String payDate) {
         this.historyID = historyID;
         this.meterNumber = meterNumber;
         this.billValue = billValue;
         this.payDate = payDate;
     }
 
-    public String getHistoryID() {
+    public ObjectId getHistoryID() {
         return historyID;
     }
 
-    public void setHistoryID(String historyID) {
+    public void setHistoryID(ObjectId historyID) {
         this.historyID = historyID;
     }
 
@@ -39,19 +43,19 @@ public class History {
         this.meterNumber = meterNumber;
     }
 
-    public int getBillValue() {
+    public double getBillValue() {
         return billValue;
     }
 
-    public void setBillValue(int billValue) {
+    public void setBillValue(double billValue) {
         this.billValue = billValue;
     }
 
-    public Date getPayDate() {
+    public String getPayDate() {
         return payDate;
     }
 
-    public void setPayDate(Date payDate) {
+    public void setPayDate(String payDate) {
         this.payDate = payDate;
     }
 }

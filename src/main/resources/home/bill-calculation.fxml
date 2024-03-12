@@ -25,8 +25,8 @@
                 <TextField fx:id="dayConsumingTextField" layoutX="276.0" layoutY="44.0" promptText="Day consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
                 <TextField fx:id="nightConsumingTextField" layoutX="276.0" layoutY="110.0" promptText="Night consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
                 <Button fx:id="calculateButton" layoutX="310.0" layoutY="174.0" mnemonicParsing="false" onAction="#calculateTotalBillAction" prefHeight="30.0" prefWidth="80.0" styleClass="calculateButton" text="Calculate" textFill="WHITE" />
-                <ComboBox layoutX="69.0" prefWidth="150.0" promptText="Meter" styleClass="meterComboBox" />
-                <Button layoutX="275.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="addToHistoryButton" text="Add to history">
+                <ComboBox fx:id="metersComboBox" layoutX="69.0" prefWidth="150.0" promptText="Meter" styleClass="meterComboBox" />
+                <Button onAction="#addToHistory" layoutX="275.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="addToHistoryButton" text="Add to history">
                     <font>
                         <Font size="14.0" />
                     </font>

@@ -1,10 +1,20 @@
 package database.DAO.history;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 import database.MongoConnection;
 import database.entity.History;
+import database.entity.Meter;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class HistoryDAO extends MongoConnection implements IHistoryDAO{
 
@@ -23,5 +33,34 @@ public class HistoryDAO extends MongoConnection implements IHistoryDAO{
                 .append("Pay date", history.getPayDate());
         historyCollection.insertOne(historyDocument);
         System.out.println("Succesfully inserted!");
+    }
+
+    @Override
+    public void clear() {
+        DeleteResult deleteResult = historyCollection.deleteMany(new Document());
+        System.out.println("Succesfully deleted all " + deleteResult.getDeletedCount() + " documents!");
+    }
+
+    @Override
+    public void delete(ObjectId historyId) {
+        DeleteResult deleteResult = historyCollection.deleteOne(Filters.eq("_id",historyId));
+        System.out.println("Succesfully deleted " + deleteResult.getDeletedCount() + "documents!");
+    }
+
+    @Override
+    public List<History> getItems() {
+        List<History> historyList = new LinkedList<>();
+        FindIterable<Document> findIterable  = historyCollection.find();
+        Iterator<Document> iterator = findIterable.iterator();
+        while(iterator.hasNext()){
+            Document document = iterator.next();
+            ObjectId historyID = document.getObjectId("_id");
+            String meterNumber = document.getString("Meter number");
+            double billValue = document.getDouble("Bill");
+            String payDateValue = document.getString("Pay date");
+            History history = new History(historyID,meterNumber,billValue,payDateValue);
+            historyList.add(history);
+        }
+        return historyList;
     }
 }
