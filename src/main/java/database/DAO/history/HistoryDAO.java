@@ -29,6 +29,9 @@ public class HistoryDAO extends MongoConnection implements IHistoryDAO{
     public void add(History history) {
         Document historyDocument = new Document()
                 .append("Meter number", history.getMeterNumber())
+                .append("Day tariff" , history.getDayTariff())
+                .append("Night tariff", history.getNightTariff())
+                .append("Markup", history.getMarkup())
                 .append("Bill",history.getBillValue())
                 .append("Pay date", history.getPayDate());
         historyCollection.insertOne(historyDocument);
@@ -56,9 +59,12 @@ public class HistoryDAO extends MongoConnection implements IHistoryDAO{
             Document document = iterator.next();
             ObjectId historyID = document.getObjectId("_id");
             String meterNumber = document.getString("Meter number");
+            double dayTariffValue = document.getDouble("Day tariff");
+            double nightTariffValue = document.getDouble("Night tariff");
+            int markup = document.getInteger("Markup");
             double billValue = document.getDouble("Bill");
             String payDateValue = document.getString("Pay date");
-            History history = new History(historyID,meterNumber,billValue,payDateValue);
+            History history = new History(historyID,meterNumber,dayTariffValue,nightTariffValue,markup,billValue,payDateValue);
             historyList.add(history);
         }
         return historyList;

@@ -7,11 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddCounterController implements Initializable {
+    @FXML
+    private AnchorPane scenePane;
     @FXML
     private Button addCounterButton;
     @FXML
@@ -38,6 +42,8 @@ public class AddCounterController implements Initializable {
         meter.setDayTariffValue(dayTariff);
         meter.setNightTariffValue(nightTariff);
         meterDAO.add(meter);
+        Stage stage = (Stage) scenePane.getScene().getWindow();
+        stage.close();
     }
 
 }

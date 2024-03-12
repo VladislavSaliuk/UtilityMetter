@@ -20,8 +20,11 @@
     <children>
         <TableView fx:id="historyTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn fx:id="meterNumberTableColumn" prefWidth="300.0" text="Meter number" />
-                <TableColumn fx:id="billTableColumn" prefWidth="200.0" text="Bill" />
+                <TableColumn fx:id="meterNumberTableColumn" prefWidth="100.0" text="Meter number" />
+            <TableColumn fx:id="dayTariffTableColumn" prefWidth="100.0" text="Day tariff" />
+            <TableColumn fx:id="nightTariffTableColumn" prefWidth="100.0" text="Night tariff" />
+            <TableColumn fx:id="markupTableColumn" prefWidth="100.0" text="Markup" />
+                <TableColumn fx:id="billTableColumn" prefWidth="100.0" text="Total bill $" />
                 <TableColumn fx:id="payDateTableColumn" prefWidth="200.0" text="Pay date" />
             </columns>
         </TableView>

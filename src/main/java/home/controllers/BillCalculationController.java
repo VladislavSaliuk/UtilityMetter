@@ -108,10 +108,11 @@ public class BillCalculationController implements Initializable {
             String currentMetterNumber = metersComboBox.getValue();
             double totalBill = meterCalculator.calculateTotalBill(markupValue);
             Date date = new Date();
-            History history = new History(currentMetterNumber, totalBill, date.toString());
+            History history = new History(currentMetterNumber,tariffsOperator.getDayTariffValue(metersComboBox.getValue()),tariffsOperator.getNightTariffValue(metersComboBox.getValue()), markupValue, totalBill, date.toString());
             historyDAO.add(history);
             displayMessage("Succsesfully added!", Color.GREEN.darker());
         }
+        totalBill = 0;
     }
 
 

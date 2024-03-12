@@ -37,6 +37,15 @@ public class HistoryController implements Initializable {
     private TableColumn<History, String> meterNumberTableColumn;
 
     @FXML
+    private TableColumn<History, Double> dayTariffTableColumn;
+
+    @FXML
+    private TableColumn<History, Double> nightTariffTableColumn;
+
+    @FXML
+    private TableColumn<History, Integer> markupTableColumn;
+
+    @FXML
     private TableColumn<History, Double> billTableColumn;
 
     @FXML
@@ -49,6 +58,9 @@ public class HistoryController implements Initializable {
         observableList.addAll(historyDAO.getItems());
         meterNumberTableColumn.setCellValueFactory(new PropertyValueFactory<History, String>("meterNumber"));
         billTableColumn.setCellValueFactory(new PropertyValueFactory<History, Double>("billValue"));
+        dayTariffTableColumn.setCellValueFactory(new PropertyValueFactory<History, Double>("dayTariff"));
+        nightTariffTableColumn.setCellValueFactory(new PropertyValueFactory<History, Double>("nightTariff"));
+        markupTableColumn.setCellValueFactory(new PropertyValueFactory<History,Integer>("markup"));
         payDateTableColumn.setCellValueFactory(new PropertyValueFactory<History, String>("payDate"));
         historyTableView.setItems(observableList);
     }
