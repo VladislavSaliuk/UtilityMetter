@@ -2,14 +2,18 @@ package home.controllers;
 
 import database.DAO.history.HistoryDAO;
 import database.entity.History;
+import database.entity.Meter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -49,9 +53,13 @@ public class HistoryController implements Initializable {
     private TableColumn<History, Double> billTableColumn;
 
     @FXML
+    private TextField historySearchFilter;
+
+    @FXML
     private TableColumn<History, String> payDateTableColumn;
     private HistoryDAO historyDAO;
     private ObservableList observableList = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         historyDAO = new HistoryDAO();
@@ -63,6 +71,22 @@ public class HistoryController implements Initializable {
         markupTableColumn.setCellValueFactory(new PropertyValueFactory<History,Integer>("markup"));
         payDateTableColumn.setCellValueFactory(new PropertyValueFactory<History, String>("payDate"));
         historyTableView.setItems(observableList);
+
+        FilteredList<History> filteredList = new FilteredList<>(observableList, b -> true);
+        historySearchFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(history -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return history.getMeterNumber().toLowerCase().contains(lowerCaseFilter) ||
+                        history.getPayDate().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+
+        SortedList<History> sortedData = new SortedList<>(filteredList);
+        sortedData.comparatorProperty().bind(historyTableView.comparatorProperty());
+        historyTableView.setItems(sortedData);
     }
 
     @FXML
