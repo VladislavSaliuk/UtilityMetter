@@ -2,6 +2,8 @@ module org.example.utilitymetter {
     requires javafx.controls;
     requires javafx.fxml;
     requires mongo.java.driver;
+    requires org.apache.pdfbox;
+    requires java.desktop;
 
     opens home to javafx.fxml;
     exports home;

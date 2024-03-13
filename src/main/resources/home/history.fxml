@@ -40,7 +40,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-                <Button fx:id="reportButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Report" />
+                <Button onAction="#makeReport" fx:id="reportButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Report" />
                 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Delete" />
                 <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearHistory" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Clear" />
             </children>
