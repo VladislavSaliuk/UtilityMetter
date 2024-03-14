@@ -14,11 +14,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import logic.MetersComboBoxInitializer;
-import logic.MetterCalculator;
+import logic.CountersComboBoxInitializer;
+import logic.CounterCalculator;
 import logic.TariffsOperator;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -30,14 +31,14 @@ public class BillCalculationController implements Initializable {
     @FXML
     private TextField nightConsumingTextField;
     @FXML
-    private ComboBox<String> metersComboBox;
+    private ComboBox<String> countersComboBox;
     @FXML
     private Label calculationResultLabel;
     @FXML
     private Label markupLabel;
-    private MetterCalculator meterCalculator;
+    private CounterCalculator counterCalculator;
     private HistoryDAO historyDAO;
-    private MetersComboBoxInitializer metersComboBoxInitializer;
+    private CountersComboBoxInitializer countersComboBoxInitializer;
     private TariffsOperator tariffsOperator;
     private int markupValue;
     private double totalBill;
@@ -46,13 +47,11 @@ public class BillCalculationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         totalBill = 0;
-        meterCalculator = new MetterCalculator();
+        counterCalculator = new CounterCalculator();
         historyDAO = new HistoryDAO();
-        metersComboBoxInitializer = new MetersComboBoxInitializer();
+        countersComboBoxInitializer = new CountersComboBoxInitializer();
         tariffsOperator = new TariffsOperator();
         markupLabel.setText("Markup " + markupValue + "%");
-        comboBoxObservableList.addAll(metersComboBoxInitializer.getMeterNumbers());
-        metersComboBox.setItems(comboBoxObservableList);
     }
 
     @FXML
@@ -60,7 +59,7 @@ public class BillCalculationController implements Initializable {
         if (dayConsumingTextField.getText().isEmpty() || nightConsumingTextField.getText().isEmpty()) {
             displayMessage("Please fill in all textfields!", Color.RED);
             totalBill = 0;
-        } else if(metersComboBox.getValue() == null){
+        } else if(countersComboBox.getValue() == null){
             displayMessage("Please choose meter before calculation!", Color.RED);
             totalBill = 0;
         }else {
@@ -76,16 +75,16 @@ public class BillCalculationController implements Initializable {
         }
     }
     private void calculateTotalBill(){
-        String meterComboBoxCurrentValue = metersComboBox.getValue();
-        double dayTariffValue = tariffsOperator.getDayTariffValue(meterComboBoxCurrentValue);
-        double nightTariffValue = tariffsOperator.getNightTariffValue(meterComboBoxCurrentValue);
+        String countersComboBoxCurrentValue = countersComboBox.getValue();
+        double dayTariffValue = tariffsOperator.getDayTariffValue(countersComboBoxCurrentValue);
+        double nightTariffValue = tariffsOperator.getNightTariffValue(countersComboBoxCurrentValue);
         double consumedEnergyDuringDayPeriod = Double.parseDouble(dayConsumingTextField.getText());
         double consumedEnergyDuringNightPeriod = Double.parseDouble(nightConsumingTextField.getText());
-        meterCalculator.setDayTariff(dayTariffValue);
-        meterCalculator.setNightTariff(nightTariffValue);
-        meterCalculator.setDayEnergyConsumption(consumedEnergyDuringDayPeriod);
-        meterCalculator.setNightEnergyConsumption(consumedEnergyDuringNightPeriod);
-        totalBill = meterCalculator.calculateTotalBill(markupValue);
+        counterCalculator.setDayTariff(dayTariffValue);
+        counterCalculator.setNightTariff(nightTariffValue);
+        counterCalculator.setDayEnergyConsumption(consumedEnergyDuringDayPeriod);
+        counterCalculator.setNightEnergyConsumption(consumedEnergyDuringNightPeriod);
+        totalBill = counterCalculator.calculateTotalBill(markupValue);
         String resultMessage = String.format("Your total bill count is %.2f $",totalBill);
         displayMessage(resultMessage,Color.BLACK);
     }
@@ -105,15 +104,28 @@ public class BillCalculationController implements Initializable {
         if(totalBill == 0) {
             displayMessage("Please make calculation before adding!",Color.RED);
         } else {
-            String currentMetterNumber = metersComboBox.getValue();
-            double totalBill = meterCalculator.calculateTotalBill(markupValue);
+            String currentMetterNumber = countersComboBox.getValue();
+            double totalBill = counterCalculator.calculateTotalBill(markupValue);
             Date date = new Date();
-            History history = new History(currentMetterNumber,tariffsOperator.getDayTariffValue(metersComboBox.getValue()),tariffsOperator.getNightTariffValue(metersComboBox.getValue()), markupValue, totalBill, date.toString());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = dateFormat.format(date);
+            History history = new History();
+            history.setCounterNumber(currentMetterNumber);
+            history.setDayTariff(tariffsOperator.getDayTariffValue(countersComboBox.getValue()));
+            history.setNightTariff(tariffsOperator.getNightTariffValue(countersComboBox.getValue()));
+            history.setMarkup(markupValue);
+            history.setTotalBill(totalBill);
+            history.setPayDate(formattedDate);
             historyDAO.add(history);
             displayMessage("Succsesfully added!", Color.GREEN.darker());
         }
         totalBill = 0;
     }
-
+    @FXML
+    public void refreshCountersComboBox(MouseEvent event){
+        comboBoxObservableList.clear();
+        comboBoxObservableList.addAll(countersComboBoxInitializer.getMeterNumbers());
+        countersComboBox.setItems(comboBoxObservableList);
+    }
 
 }

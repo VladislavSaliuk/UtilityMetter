@@ -2,29 +2,20 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="parent" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="parent" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.controllers.MainController">
    <children>
       <VBox prefHeight="600.0" prefWidth="300.0" styleClass="slydebar">
          <children>
             <Label alignment="BASELINE_LEFT" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #00A2D3;" text="Utility metter" textFill="WHITE">
                <font>
-                  <Font name="Ebrima" size="30.0" />
+                  <Font name="Ebrima" size="35.0" />
                </font>
                <padding>
                   <Insets left="50.0" />
@@ -66,9 +57,9 @@
       </Pane>
       <StackPane layoutX="300.0" layoutY="200.0">
          <children>
-            <fx:include source="counters.fxml" fx:id="countersGridPane"/>
-            <fx:include source="history.fxml"  fx:id="historyGridPane"/>
-            <fx:include source="bill-calculation.fxml" fx:id="calculateBillGridPane"/>
+            <fx:include fx:id="countersGridPane" source="counters.fxml" />
+            <fx:include fx:id="historyGridPane" source="history.fxml" />
+            <fx:include fx:id="calculateBillGridPane" source="bill-calculation.fxml" />
          </children>
       </StackPane>
    </children>

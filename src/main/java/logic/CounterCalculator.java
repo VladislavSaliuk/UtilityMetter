@@ -1,16 +1,16 @@
 package logic;
 
-public class MetterCalculator {
+public class CounterCalculator {
     private double dayEnergyConsumption;
     private double dayTariff;
     private double nightEnergyConsumption;
     private double nightTariff;
 
-    public MetterCalculator() {
+    public CounterCalculator() {
 
     }
 
-    public MetterCalculator(double dayEnergyConsumption, double dayTariff, double nightEnergyConsumption, double nightTariff) {
+    public CounterCalculator(double dayEnergyConsumption, double dayTariff, double nightEnergyConsumption, double nightTariff) {
         this.dayEnergyConsumption = dayEnergyConsumption;
         this.dayTariff = dayTariff;
         this.nightEnergyConsumption = nightEnergyConsumption;

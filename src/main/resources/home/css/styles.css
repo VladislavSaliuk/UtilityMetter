@@ -113,3 +113,19 @@
 .slider .filled-track {
     -fx-background-color: #004D40;
 }
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #b0e1d0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}

@@ -21,7 +21,7 @@
     <children>
         <TableView fx:id="countersTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn fx:id="meterNumberTableColumn" prefWidth="200.0" text="Meter number" />
+                <TableColumn fx:id="counterNumberTableColumn" prefWidth="200.0" text="Counter number" />
                 <TableColumn fx:id="dayTariffTableColumn" prefWidth="250.0" text="Day tariff" />
                 <TableColumn fx:id="nightTariffTableColumn" prefWidth="250.0" text="Night tariff" />
             </columns>

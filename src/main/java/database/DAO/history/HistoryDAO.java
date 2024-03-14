@@ -7,11 +7,9 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import database.MongoConnection;
 import database.entity.History;
-import database.entity.Meter;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,32 +20,29 @@ public class HistoryDAO extends MongoConnection implements IHistoryDAO{
     private MongoDatabase mongoDatabase;
     private MongoCollection<Document> historyCollection;
     public HistoryDAO() {
-        mongoDatabase = provideConnectionToDatabase();
+        mongoDatabase = getConnection();
         historyCollection = mongoDatabase.getCollection(COLLECTION_NAME);
     }
     @Override
     public void add(History history) {
         Document historyDocument = new Document()
-                .append("Meter number", history.getMeterNumber())
+                .append("Counter number", history.getCounterNumber())
                 .append("Day tariff" , history.getDayTariff())
                 .append("Night tariff", history.getNightTariff())
                 .append("Markup", history.getMarkup())
-                .append("Bill",history.getBillValue())
+                .append("Bill",history.getTotalBill())
                 .append("Pay date", history.getPayDate());
         historyCollection.insertOne(historyDocument);
-        System.out.println("Succesfully inserted!");
     }
 
     @Override
     public void clear() {
         DeleteResult deleteResult = historyCollection.deleteMany(new Document());
-        System.out.println("Succesfully deleted all " + deleteResult.getDeletedCount() + " documents!");
     }
 
     @Override
     public void delete(ObjectId historyId) {
         DeleteResult deleteResult = historyCollection.deleteOne(Filters.eq("_id",historyId));
-        System.out.println("Succesfully deleted " + deleteResult.getDeletedCount() + "documents!");
     }
 
     @Override
@@ -58,13 +53,20 @@ public class HistoryDAO extends MongoConnection implements IHistoryDAO{
         while(iterator.hasNext()){
             Document document = iterator.next();
             ObjectId historyID = document.getObjectId("_id");
-            String meterNumber = document.getString("Meter number");
-            double dayTariffValue = document.getDouble("Day tariff");
-            double nightTariffValue = document.getDouble("Night tariff");
+            String counterNumber = document.getString("Counter number");
+            double dayTariff = document.getDouble("Day tariff");
+            double nightTariff = document.getDouble("Night tariff");
             int markup = document.getInteger("Markup");
-            double billValue = document.getDouble("Bill");
-            String payDateValue = document.getString("Pay date");
-            History history = new History(historyID,meterNumber,dayTariffValue,nightTariffValue,markup,billValue,payDateValue);
+            double totalBill = document.getDouble("Bill");
+            String payDate = document.getString("Pay date");
+            History history = new History();
+            history.setHistoryID(historyID);
+            history.setCounterNumber(counterNumber);
+            history.setDayTariff(dayTariff);
+            history.setNightTariff(nightTariff);
+            history.setMarkup(markup);
+            history.setTotalBill(totalBill);
+            history.setPayDate(payDate);
             historyList.add(history);
         }
         return historyList;

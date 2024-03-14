@@ -10,7 +10,7 @@
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <TextField fx:id="dayTariffTextField" layoutX="76.0" layoutY="138.0" promptText="Day tariff" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
-      <TextField fx:id="metterNumberTextField" layoutX="75.0" layoutY="85.0" promptText="Metter number" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
+      <TextField fx:id="metterNumberTextField" layoutX="75.0" layoutY="85.0" promptText="Counter number" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
       <TextField fx:id="nightTariffTextField" layoutX="76.0" layoutY="192.0" promptText="Night tariff" style="-fx-background-radius: 0px; -fx-background-color: transparent; -fx-border-color: #333645FF;" />
       <Button fx:id="editCounterButton" onAction="#editCounter" layoutX="111.0" layoutY="242.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass="countersTableButton" text="Edit" />
       <Pane prefHeight="60.0" prefWidth="300.0" style="-fx-background-color: #5D7C59FF;">

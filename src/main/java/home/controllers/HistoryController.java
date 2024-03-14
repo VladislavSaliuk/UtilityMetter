@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
@@ -25,27 +24,14 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import javax.swing.*;
-
 public class HistoryController implements Initializable {
 
-    @FXML
-    private Button refreshButton;
-
-    @FXML
-    private Button reportButton;
-
-    @FXML
-    private Button clearButton;
-
-    @FXML
-    private Button deleteButton;
 
     @FXML
     private TableView<History> historyTableView;
 
     @FXML
-    private TableColumn<History, String> meterNumberTableColumn;
+    private TableColumn<History, String> counterNumberTableColumn;
 
     @FXML
     private TableColumn<History, Double> dayTariffTableColumn;
@@ -72,8 +58,8 @@ public class HistoryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         historyDAO = new HistoryDAO();
         observableList = FXCollections.observableArrayList(historyDAO.getItems());
-        meterNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("meterNumber"));
-        billTableColumn.setCellValueFactory(new PropertyValueFactory<>("billValue"));
+        counterNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("counterNumber"));
+        billTableColumn.setCellValueFactory(new PropertyValueFactory<>("totalBill"));
         dayTariffTableColumn.setCellValueFactory(new PropertyValueFactory<>("dayTariff"));
         nightTariffTableColumn.setCellValueFactory(new PropertyValueFactory<>("nightTariff"));
         markupTableColumn.setCellValueFactory(new PropertyValueFactory<>("markup"));
@@ -87,8 +73,7 @@ public class HistoryController implements Initializable {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                return history.getMeterNumber().toLowerCase().contains(lowerCaseFilter) ||
-                        history.getPayDate().toLowerCase().contains(lowerCaseFilter);
+                return history.getPayDate().toLowerCase().contains(lowerCaseFilter);
             });
         });
 
@@ -106,13 +91,17 @@ public class HistoryController implements Initializable {
     public void delete(ActionEvent event){
         History selectedHistory = historyTableView.getSelectionModel().getSelectedItem();
         if(selectedHistory != null) {
-            historyTableView.getItems().remove(selectedHistory);
+            ObservableList<History> historyList = FXCollections.observableArrayList(historyTableView.getItems());
+            historyList.remove(selectedHistory);
+            historyTableView.setItems(historyList);
             historyDAO.delete(selectedHistory.getHistoryID());
         }
     }
 
+
     @FXML
     public void clearHistory(ActionEvent event){
+        ObservableList<History> historyList = FXCollections.observableArrayList(historyTableView.getItems());
         historyTableView.getItems().clear();
         historyDAO.clear();
     }
@@ -206,7 +195,7 @@ public class HistoryController implements Initializable {
     private String getCellValue(History history, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return history.getMeterNumber();
+                return history.getCounterNumber();
             case 1:
                 return String.valueOf(history.getDayTariff());
             case 2:
@@ -214,7 +203,7 @@ public class HistoryController implements Initializable {
             case 3:
                 return String.valueOf(history.getMarkup());
             case 4:
-                return String.valueOf(history.getBillValue());
+                return String.valueOf(history.getTotalBill());
             case 5:
                 return String.valueOf(history.getPayDate());
             default:
