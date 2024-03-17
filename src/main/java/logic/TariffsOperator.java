@@ -2,8 +2,11 @@ package logic;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import database.MongoConnection;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class TariffsOperator extends MongoConnection {
     private final String COLLECTION_NAME = "counters";
@@ -23,5 +26,6 @@ public class TariffsOperator extends MongoConnection {
         double dayTariffValue = document.getDouble("Day tariff");
         return dayTariffValue;
     }
+
 
 }

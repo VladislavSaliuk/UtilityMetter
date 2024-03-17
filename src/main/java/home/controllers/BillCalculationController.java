@@ -85,8 +85,8 @@ public class BillCalculationController implements Initializable {
         counterCalculator.setDayEnergyConsumption(consumedEnergyDuringDayPeriod);
         counterCalculator.setNightEnergyConsumption(consumedEnergyDuringNightPeriod);
         totalBill = counterCalculator.calculateTotalBill(markupValue);
-        String resultMessage = String.format("Your total bill count is %.2f $",totalBill);
-        displayMessage(resultMessage,Color.BLACK);
+        String resultMessage = String.format("Your total bill count is %.2f $", totalBill);
+        displayMessage(resultMessage, Color.BLACK);
     }
     private void displayMessage(String message, Color fontColor) {
         calculationResultLabel.setTextFill(fontColor);
