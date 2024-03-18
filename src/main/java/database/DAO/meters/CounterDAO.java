@@ -11,30 +11,30 @@ import database.entity.Counter;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CounterDAO extends MongoConnection implements ICounterDAO {
+
     private final String COLLECTION_NAME = "counters";
-    private MongoDatabase database;
     private MongoCollection<Document> countersCollection;
+
     public CounterDAO() {
-        database = getConnection();
+        MongoDatabase database = getConnection();
         countersCollection = database.getCollection(COLLECTION_NAME);
     }
+
     @Override
-    public void add(Counter counter) {
-        Document tariffDocument = new Document()
-                .append("Counter number" , counter.getCounterNumber())
-                .append("Day tariff" , counter.getDayTariff())
-                .append("Night tariff", counter.getNightTariff());
+    public void add(String counterNumber) {
+        Document tariffDocument = new Document("Counter number", counterNumber)
+                .append("Current day consumption", 0.0)
+                .append("Current night consumption", 0.0);
         countersCollection.insertOne(tariffDocument);
     }
 
     @Override
     public void delete(ObjectId counterID) {
-        DeleteResult deleteResult = countersCollection.deleteOne(Filters.eq("_id",counterID));
+        DeleteResult deleteResult = countersCollection.deleteOne(Filters.eq("_id", counterID));
     }
 
     @Override
@@ -44,20 +44,10 @@ public class CounterDAO extends MongoConnection implements ICounterDAO {
 
     @Override
     public List<Counter> getItems() {
-        List<Counter> counterList = new LinkedList<>();
-        FindIterable<Document> findIterable  = countersCollection.find();
-        Iterator<Document> iterator = findIterable.iterator();
-        while(iterator.hasNext()){
-            Document document = iterator.next();
-            ObjectId meterID = document.getObjectId("_id");
-            String counterNumber = document.getString("Counter number");
-            double dayTariffValue = document.getDouble("Day tariff");
-            double nightTariffValue = document.getDouble("Night tariff");
-            Counter counter = new Counter();
-            counter.setCounterID(meterID);
-            counter.setCounterNumber(counterNumber);
-            counter.setDayTariff(dayTariffValue);
-            counter.setNightTariff(nightTariffValue);
+        List<Counter> counterList = new ArrayList<>();
+        FindIterable<Document> findIterable = countersCollection.find();
+        for (Document document : findIterable) {
+            Counter counter = documentToCounter(document);
             counterList.add(counter);
         }
         return counterList;
@@ -66,8 +56,20 @@ public class CounterDAO extends MongoConnection implements ICounterDAO {
     @Override
     public void edit(Counter counter) {
         countersCollection.updateOne(Filters.eq("_id", counter.getCounterID()), Updates.set("Counter number", counter.getCounterNumber()));
-        countersCollection.updateOne(Filters.eq("_id", counter.getCounterID()), Updates.set("Day tariff", counter.getDayTariff()));
-        countersCollection.updateOne(Filters.eq("_id", counter.getCounterID()), Updates.set("Night tariff", counter.getNightTariff()));
+        countersCollection.updateOne(Filters.eq("_id", counter.getCounterID()), Updates.set("Current day consumption", counter.getCurrentDayConsumptionValue()));
+        countersCollection.updateOne(Filters.eq("_id", counter.getCounterID()), Updates.set("Current night consumption", counter.getCurrentNightConsumptionValue()));
     }
 
+    private Counter documentToCounter(Document document) {
+        ObjectId counterID = document.getObjectId("_id");
+        String counterNumber = document.getString("Counter number");
+        double currentDayConsumption = document.getDouble("Current day consumption");
+        double currentNightConsumption = document.getDouble("Current night consumption");
+        Counter counter = new Counter();
+        counter.setCounterID(counterID);
+        counter.setCounterNumber(counterNumber);
+        counter.setCurrentDayConsumptionValue(currentDayConsumption);
+        counter.setCurrentNightConsumptionValue(currentNightConsumption);
+        return counter;
+    }
 }

@@ -22,25 +22,22 @@
         <TableView fx:id="countersTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
                 <TableColumn fx:id="counterNumberTableColumn" prefWidth="200.0" text="Counter number" />
-                <TableColumn fx:id="dayTariffTableColumn" prefWidth="250.0" text="Day tariff" />
-                <TableColumn fx:id="nightTariffTableColumn" prefWidth="250.0" text="Night tariff" />
+                <TableColumn fx:id="currentDayConsumptionTableColumn" prefWidth="250.0" text="Current day consumption" />
+                <TableColumn fx:id="currentNightConsumptionTableColumn" prefWidth="250.0" text="Current night consumption" />
             </columns>
         </TableView>
         <HBox prefHeight="30.0" prefWidth="700.0" spacing="20.0">
             <children>
-            <TextField fx:id="countersSearchFilter" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: #22242d;">
+            <TextField fx:id="counterTextField" promptText="Counter" style="-fx-background-color: transparent; -fx-border-color: #22242d;">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-                <Button mnemonicParsing="false" onAction="#refreshTable" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Refresh">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Button>
-                <Button mnemonicParsing="false" onAction="#addCounterButton" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Add" />
-                <Button mnemonicParsing="false" onAction="#editCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Edit" />
-                <Button mnemonicParsing="false" onAction="#deleteCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Delete" />
-                <Button mnemonicParsing="false" onAction="#clearTable" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Clear" />
+                <Button mnemonicParsing="false" onAction="#handleAddCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Add" />
+                <Button mnemonicParsing="false" onAction="#handleEditCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Edit" />
+                <Button mnemonicParsing="false" onAction="#handleDeleteCounter" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Delete" />
+                <Button mnemonicParsing="false" onAction="#handleClearTableView" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Clear" />
+                <Button mnemonicParsing="false" onAction="#handleRefreshTableView" prefHeight="25.0" prefWidth="75.0" styleClass="countersTableButton" text="Refresh" />
             </children>
         </HBox>
     </children>

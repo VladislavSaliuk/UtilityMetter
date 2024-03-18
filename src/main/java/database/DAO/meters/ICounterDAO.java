@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface ICounterDAO {
-    public void add(Counter counter);
+    public void add(String counterNumber);
     public void delete(ObjectId counterID);
     public void clear();
     public List<Counter> getItems();

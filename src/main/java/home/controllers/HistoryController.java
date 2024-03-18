@@ -10,22 +10,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-public class HistoryController implements Initializable {
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class HistoryController implements Initializable {
 
     @FXML
     private TableView<History> historyTableView;
@@ -34,13 +31,10 @@ public class HistoryController implements Initializable {
     private TableColumn<History, String> counterNumberTableColumn;
 
     @FXML
-    private TableColumn<History, Double> dayTariffTableColumn;
+    private TableColumn<History, Double> currentDayConsumptionTableColumn;
 
     @FXML
-    private TableColumn<History, Double> nightTariffTableColumn;
-
-    @FXML
-    private TableColumn<History, Integer> markupTableColumn;
+    private TableColumn<History, Double> currentNightConsumptionTableColumn;
 
     @FXML
     private TableColumn<History, Double> billTableColumn;
@@ -58,15 +52,24 @@ public class HistoryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         historyDAO = new HistoryDAO();
         observableList = FXCollections.observableArrayList(historyDAO.getItems());
+
+        initializeTableView();
+        setupFiltering();
+    }
+
+    private void initializeTableView() {
         counterNumberTableColumn.setCellValueFactory(new PropertyValueFactory<>("counterNumber"));
         billTableColumn.setCellValueFactory(new PropertyValueFactory<>("totalBill"));
-        dayTariffTableColumn.setCellValueFactory(new PropertyValueFactory<>("dayTariff"));
-        nightTariffTableColumn.setCellValueFactory(new PropertyValueFactory<>("nightTariff"));
-        markupTableColumn.setCellValueFactory(new PropertyValueFactory<>("markup"));
+        currentDayConsumptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("currentDayConsumingValue"));
+        currentNightConsumptionTableColumn.setCellValueFactory(new PropertyValueFactory<>("currentNightConsumingValue"));
         payDateTableColumn.setCellValueFactory(new PropertyValueFactory<>("payDate"));
-        historyTableView.setItems(observableList);
 
+        historyTableView.setItems(observableList);
+    }
+
+    private void setupFiltering() {
         FilteredList<History> filteredList = new FilteredList<>(observableList, b -> true);
+
         historySearchFilter.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(history -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -83,111 +86,95 @@ public class HistoryController implements Initializable {
     }
 
     @FXML
-    public void refreshTable(ActionEvent event){
+    public void handleRefreshTableView(ActionEvent event) {
         observableList.setAll(historyDAO.getItems());
     }
 
     @FXML
-    public void delete(ActionEvent event){
+    public void handleDeleteCounter(ActionEvent event) {
         History selectedHistory = historyTableView.getSelectionModel().getSelectedItem();
-        if(selectedHistory != null) {
-            ObservableList<History> historyList = FXCollections.observableArrayList(historyTableView.getItems());
-            historyList.remove(selectedHistory);
-            historyTableView.setItems(historyList);
+        if (selectedHistory != null) {
+            observableList.remove(selectedHistory);
             historyDAO.delete(selectedHistory.getHistoryID());
         }
     }
 
-
     @FXML
-    public void clearHistory(ActionEvent event){
-        ObservableList<History> historyList = FXCollections.observableArrayList(historyTableView.getItems());
+    public void handleClearTableView(ActionEvent event) {
         historyTableView.getItems().clear();
         historyDAO.clear();
     }
 
     @FXML
-    public void makeReport(ActionEvent event) {
-        String path = "";
+    public void handleMakeReport(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
         File selectedFile = fileChooser.showSaveDialog(null);
         if (selectedFile != null) {
-            path = selectedFile.getAbsolutePath();
+            String filePath = selectedFile.getAbsolutePath();
             try {
-                historyTableView.layout();
-                createPDF(path);
+                createPDF(filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
     private void createPDF(String filePath) throws IOException {
         PDDocument pdDocument = new PDDocument();
-        int cellHeight = 15;
-
-        int colCount = 6;
-        int rowCount = historyTableView.getItems().size();
-
-        int currentPage = 1;
-
         PDPage pdPage = new PDPage();
         pdDocument.addPage(pdPage);
-        int pageHeight = (int) pdPage.getTrimBox().getHeight();
-        int pageWidth = (int) pdPage.getTrimBox().getWidth();
-        PDPageContentStream pdPageContentStream = new PDPageContentStream(pdDocument, pdPage);
-        pdPageContentStream.setStrokingColor(Color.BLACK);
-        pdPageContentStream.setLineWidth(1);
 
-        int initX = 3;
-        int initY = pageHeight - 3;
-        initY -= cellHeight + 5;
+        int cellHeight = 15;
+        int colCount = 5;
+        int rowCount = historyTableView.getItems().size();
+        int currentPage = 1;
 
-        for (int i = 0; i < colCount; i++) {
-            int cellWidth = (int) (((int) historyTableView.getColumns().get(i).getWidth()) * 0.9);
-            pdPageContentStream.addRect(initX, initY, cellWidth, -cellHeight);
-            pdPageContentStream.beginText();
-            pdPageContentStream.newLineAtOffset(initX + 5, initY - cellHeight + 2);
-            pdPageContentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
-            pdPageContentStream.showText(historyTableView.getColumns().get(i).getText());
-            pdPageContentStream.endText();
-            initX += cellWidth;
-        }
+        try (PDPageContentStream contentStream = new PDPageContentStream(pdDocument, pdPage)) {
+            int initX = 3;
+            int initY = (int) pdPage.getMediaBox().getHeight() - 3;
+            initY -= cellHeight + 5;
 
-
-        for (int i = 0; i < rowCount; i++) {
-            History currentOrderReport = historyTableView.getItems().get(i);
-            if (initY - (cellHeight * 2) < 0) {
-                pdPageContentStream.stroke();
-                pdPageContentStream.close();
-
-                pdPage = new PDPage();
-                pdDocument.addPage(pdPage);
-                pdPageContentStream = new PDPageContentStream(pdDocument, pdPage);
-                pdPageContentStream.setStrokingColor(Color.BLACK);
-                pdPageContentStream.setLineWidth(1);
-                initY = pageHeight - 3;
-
-                currentPage++;
-            }
-            initX = 3;
-            initY -= cellHeight;
-            for (int j = 0; j < colCount; j++) {
-                int cellWidth = (int) (((int) historyTableView.getColumns().get(j).getWidth()) * 0.9);
-                pdPageContentStream.addRect(initX, initY, cellWidth, -cellHeight);
-                pdPageContentStream.beginText();
-                pdPageContentStream.newLineAtOffset(initX + 5, initY - cellHeight + 2);
-                pdPageContentStream.setFont(PDType1Font.TIMES_ROMAN, 8);
-                pdPageContentStream.showText(getCellValue(currentOrderReport, j));
-                pdPageContentStream.endText();
+            for (int i = 0; i < colCount; i++) {
+                int cellWidth = (int) (((int) historyTableView.getColumns().get(i).getWidth()) * 0.9);
+                contentStream.addRect(initX, initY, cellWidth, -cellHeight);
+                contentStream.beginText();
+                contentStream.newLineAtOffset(initX + 5, initY - cellHeight + 2);
+                contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+                contentStream.showText(historyTableView.getColumns().get(i).getText());
+                contentStream.endText();
                 initX += cellWidth;
             }
-        }
 
-        pdPageContentStream.stroke();
-        pdPageContentStream.close();
+            for (int i = 0; i < rowCount; i++) {
+                History currentHistory = historyTableView.getItems().get(i);
+                if (initY - (cellHeight * 2) < 0) {
+                    contentStream.stroke();
+                    contentStream.close();
+
+                    pdPage = new PDPage();
+                    pdDocument.addPage(pdPage);
+                    contentStream.addRect(0, 0, (int) pdPage.getMediaBox().getWidth(), (int) pdPage.getMediaBox().getHeight());
+                    contentStream.stroke();
+                    initY = (int) pdPage.getMediaBox().getHeight() - 3;
+
+                    currentPage++;
+                }
+                initX = 3;
+                initY -= cellHeight;
+                for (int j = 0; j < colCount; j++) {
+                    int cellWidth = (int) (((int) historyTableView.getColumns().get(j).getWidth()) * 0.9);
+                    contentStream.addRect(initX, initY, cellWidth, -cellHeight);
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(initX + 5, initY - cellHeight + 2);
+                    contentStream.setFont(PDType1Font.TIMES_ROMAN, 8);
+                    contentStream.showText(getCellValue(currentHistory, j));
+                    contentStream.endText();
+                    initX += cellWidth;
+                }
+            }
+            contentStream.stroke();
+        }
         pdDocument.save(filePath);
         pdDocument.close();
     }
@@ -197,18 +184,15 @@ public class HistoryController implements Initializable {
             case 0:
                 return history.getCounterNumber();
             case 1:
-                return String.valueOf(history.getDayTariff());
+                return String.valueOf(history.getCurrentDayConsumingValue());
             case 2:
-                return String.valueOf(history.getNightTariff());
+                return String.valueOf(history.getCurrentNightConsumingValue());
             case 3:
-                return String.valueOf(history.getMarkup());
-            case 4:
                 return String.valueOf(history.getTotalBill());
-            case 5:
+            case 4:
                 return String.valueOf(history.getPayDate());
             default:
                 return "";
         }
     }
-
 }

@@ -1,61 +1,31 @@
 package logic;
 
+import database.entity.Counter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CounterCalculator {
-    private double dayEnergyConsumption;
+    private double currentDayEnergyConsumption;
+    private double currentNightEnergyConsumption;
     private double dayTariff;
-    private double nightEnergyConsumption;
     private double nightTariff;
+    private Counter counter;
 
-    public CounterCalculator() {
-
-    }
-
-    public CounterCalculator(double dayEnergyConsumption, double dayTariff, double nightEnergyConsumption, double nightTariff) {
-        this.dayEnergyConsumption = dayEnergyConsumption;
-        this.dayTariff = dayTariff;
-        this.nightEnergyConsumption = nightEnergyConsumption;
-        this.nightTariff = nightTariff;
-    }
-
-    public double calculateTotalBill(int markupPercentage) {
-        if (dayEnergyConsumption < 0 || dayTariff < 0 || nightEnergyConsumption < 0 || nightTariff < 0) {
-            throw new IllegalArgumentException("Energy consumption and tariff values must be non-negative.");
+    public double calculateTotalBill() {
+        if(currentDayEnergyConsumption < 0 || currentNightEnergyConsumption < 0){
+            throw new NumberFormatException("Please enter numeric values for energy consumption!");
         }
-        double totalBillWithoutMarkup = (dayEnergyConsumption * dayTariff) + (nightEnergyConsumption * nightTariff);
-        double markup = (double) markupPercentage / 100;
-        double markupValue = totalBillWithoutMarkup * markup;
-        return totalBillWithoutMarkup + markupValue;
+        if(counter.getCurrentDayConsumptionValue() >= currentDayEnergyConsumption || counter.getCurrentNightConsumptionValue() >= currentNightEnergyConsumption){
+            throw new IllegalArgumentException("The current counter readings cannot be less than or equal to the previous ones!!");
+        }
+        return (((currentDayEnergyConsumption - counter.getCurrentDayConsumptionValue()) * dayTariff) + ((currentNightEnergyConsumption - counter.getCurrentNightConsumptionValue()) * nightTariff));
     }
 
-    public double getDayEnergyConsumption() {
-        return dayEnergyConsumption;
-    }
-
-    public void setDayEnergyConsumption(double dayEnergyConsumption) {
-        this.dayEnergyConsumption = dayEnergyConsumption;
-    }
-
-    public double getDayTariff() {
-        return dayTariff;
-    }
-
-    public void setDayTariff(double dayTariff) {
-        this.dayTariff = dayTariff;
-    }
-
-    public double getNightEnergyConsumption() {
-        return nightEnergyConsumption;
-    }
-
-    public void setNightEnergyConsumption(double nightEnergyConsumption) {
-        this.nightEnergyConsumption = nightEnergyConsumption;
-    }
-
-    public double getNightTariff() {
-        return nightTariff;
-    }
-
-    public void setNightTariff(double nightTariff) {
-        this.nightTariff = nightTariff;
-    }
 }

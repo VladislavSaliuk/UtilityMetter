@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,9 +23,9 @@
             <children>
                 <TextField fx:id="dayConsumingTextField" layoutX="276.0" layoutY="44.0" promptText="Day consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
                 <TextField fx:id="nightConsumingTextField" layoutX="276.0" layoutY="110.0" promptText="Night consuming" style="-fx-background-color: transparent; -fx-border-color: #00A2D3; -fx-border-width: 0px 0px 2px 0px;" />
-                <Button fx:id="calculateButton" layoutX="310.0" layoutY="174.0" mnemonicParsing="false" onAction="#calculateTotalBillAction" prefHeight="30.0" prefWidth="80.0" styleClass="calculateButton" text="Calculate" textFill="WHITE" />
-                <ComboBox onMouseClicked="#refreshCountersComboBox" fx:id="countersComboBox" layoutX="69.0" prefWidth="150.0" promptText="Counter" styleClass="meterComboBox" />
-                <Button layoutX="275.0" layoutY="321.0" mnemonicParsing="false" onAction="#addToHistory" prefHeight="30.0" prefWidth="150.0" styleClass="addToHistoryButton" text="Add to history">
+                <Button fx:id="calculateButton" layoutX="310.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleCalculateTotalBill" prefHeight="30.0" prefWidth="80.0" styleClass="calculateButton" text="Calculate" textFill="WHITE" />
+                <ComboBox fx:id="countersComboBox" layoutX="69.0" onMouseClicked="#handleRefreshCountersComboBox" prefWidth="150.0" promptText="Counter" styleClass="meterComboBox" />
+                <Button layoutX="275.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleAddToHistory" prefHeight="30.0" prefWidth="150.0" styleClass="addToHistoryButton" text="Add to history">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -36,8 +35,6 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-            <Slider fx:id="markupSlider" blockIncrement="1.0" layoutX="493.0" onMouseDragged="#updateText" />
-            <Label fx:id="markupLabel" layoutX="533.0" layoutY="25.0" text="Markup 0%" />
             </children>
         </Pane>
     </children>

@@ -1,6 +1,8 @@
 package home.controllers;
 
 import database.DAO.history.HistoryDAO;
+import database.DAO.meters.CounterDAO;
+import database.entity.Counter;
 import database.entity.History;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,13 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import logic.CountersComboBoxInitializer;
 import logic.CounterCalculator;
-import logic.TariffsOperator;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -25,107 +24,101 @@ import java.util.ResourceBundle;
 
 public class BillCalculationController implements Initializable {
     @FXML
-    private Slider markupSlider;
-    @FXML
     private TextField dayConsumingTextField;
     @FXML
     private TextField nightConsumingTextField;
     @FXML
-    private ComboBox<String> countersComboBox;
+    private ComboBox<Counter> countersComboBox;
     @FXML
     private Label calculationResultLabel;
-    @FXML
-    private Label markupLabel;
     private CounterCalculator counterCalculator;
     private HistoryDAO historyDAO;
-    private CountersComboBoxInitializer countersComboBoxInitializer;
-    private TariffsOperator tariffsOperator;
-    private int markupValue;
-    private double totalBill;
-    private ObservableList<String> comboBoxObservableList =  FXCollections.observableArrayList();
+    private CounterDAO counterDAO;
+    private double currentTotalBill;
+    private static final double DAY_TARIFF = 0.15;
+    private static final double NIGHT_TARIFF = 0.1;
+    private ObservableList<Counter> countersObservableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        totalBill = 0;
+        currentTotalBill = 0;
         counterCalculator = new CounterCalculator();
         historyDAO = new HistoryDAO();
-        countersComboBoxInitializer = new CountersComboBoxInitializer();
-        tariffsOperator = new TariffsOperator();
-        markupLabel.setText("Markup " + markupValue + "%");
+        counterDAO = new CounterDAO();
+        loadCountersComboBox();
     }
 
     @FXML
-    public void calculateTotalBillAction(ActionEvent event) {
+    public void handleCalculateTotalBill(ActionEvent event) {
         if (dayConsumingTextField.getText().isEmpty() || nightConsumingTextField.getText().isEmpty()) {
-            displayMessage("Please fill in all textfields!", Color.RED);
-            totalBill = 0;
-        } else if(countersComboBox.getValue() == null){
-            displayMessage("Please choose meter before calculation!", Color.RED);
-            totalBill = 0;
-        }else {
+            displayMessage("Please fill in all text fields!", Color.RED);
+            currentTotalBill = 0;
+        } else if (countersComboBox.getValue() == null) {
+            displayMessage("Please choose a meter before calculation!", Color.RED);
+            currentTotalBill = 0;
+        } else {
             try {
                 calculateTotalBill();
             } catch (NumberFormatException e) {
-                displayMessage("Please enter numeric values for energy consumption!",Color.RED);
-                totalBill = 0;
-            } catch (IllegalArgumentException e){
-                displayMessage(e.getMessage(),Color.RED);
-                totalBill = 0;
+                displayMessage(e.getMessage(), Color.RED);
+                currentTotalBill = 0;
+            } catch (IllegalArgumentException e) {
+                displayMessage(e.getMessage(), Color.RED);
+                currentTotalBill = 0;
             }
         }
     }
-    private void calculateTotalBill(){
-        String countersComboBoxCurrentValue = countersComboBox.getValue();
-        double dayTariffValue = tariffsOperator.getDayTariffValue(countersComboBoxCurrentValue);
-        double nightTariffValue = tariffsOperator.getNightTariffValue(countersComboBoxCurrentValue);
-        double consumedEnergyDuringDayPeriod = Double.parseDouble(dayConsumingTextField.getText());
-        double consumedEnergyDuringNightPeriod = Double.parseDouble(nightConsumingTextField.getText());
-        counterCalculator.setDayTariff(dayTariffValue);
-        counterCalculator.setNightTariff(nightTariffValue);
-        counterCalculator.setDayEnergyConsumption(consumedEnergyDuringDayPeriod);
-        counterCalculator.setNightEnergyConsumption(consumedEnergyDuringNightPeriod);
-        totalBill = counterCalculator.calculateTotalBill(markupValue);
-        String resultMessage = String.format("Your total bill count is %.2f $", totalBill);
-        displayMessage(resultMessage, Color.BLACK);
+
+    @FXML
+    public void handleAddToHistory(ActionEvent event) {
+        if (currentTotalBill == 0) {
+            displayMessage("Please make calculation before adding!", Color.RED);
+        } else {
+            Counter selectedCounter = countersComboBox.getValue();
+            selectedCounter.setCurrentDayConsumptionValue(Double.parseDouble(dayConsumingTextField.getText()));
+            selectedCounter.setCurrentNightConsumptionValue(Double.parseDouble(nightConsumingTextField.getText()));
+            counterDAO.edit(selectedCounter);
+            Date currentDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = dateFormat.format(currentDate);
+            History history = new History();
+            history.setCounterNumber(selectedCounter.getCounterNumber());
+            history.setCurrentDayConsumingValue(selectedCounter.getCurrentDayConsumptionValue());
+            history.setCurrentNightConsumingValue(selectedCounter.getCurrentNightConsumptionValue());
+            history.setTotalBill(currentTotalBill);
+            history.setPayDate(formattedDate);
+            historyDAO.add(history);
+            displayMessage("Successfully added to history!", Color.GREEN.darker());
+        }
+        currentTotalBill = 0;
     }
+
+    @FXML
+    public void handleRefreshCountersComboBox(MouseEvent event) {
+        loadCountersComboBox();
+    }
+
+    private void calculateTotalBill() {
+        double currentDayConsumption = Double.parseDouble(dayConsumingTextField.getText());
+        double currentNightConsumption = Double.parseDouble(nightConsumingTextField.getText());
+        counterCalculator.setCounter(countersComboBox.getValue());
+        counterCalculator.setDayTariff(DAY_TARIFF);
+        counterCalculator.setNightTariff(NIGHT_TARIFF);
+        counterCalculator.setCurrentDayEnergyConsumption(currentDayConsumption);
+        counterCalculator.setCurrentNightEnergyConsumption(currentNightConsumption);
+        currentTotalBill = counterCalculator.calculateTotalBill();
+        displayMessage("Your total bill is " + currentTotalBill + " $ ", Color.BLACK);
+    }
+
     private void displayMessage(String message, Color fontColor) {
         calculationResultLabel.setTextFill(fontColor);
         calculationResultLabel.setAlignment(Pos.CENTER);
         calculationResultLabel.setText(message);
     }
-    @FXML
-    public void updateText(MouseEvent event) {
-        int value = (int) markupSlider.getValue();
-        markupValue = value;
-        markupLabel.setText("Markup " + value + "%");
-    }
-    @FXML
-    public void addToHistory(ActionEvent event){
-        if(totalBill == 0) {
-            displayMessage("Please make calculation before adding!",Color.RED);
-        } else {
-            String currentMetterNumber = countersComboBox.getValue();
-            double totalBill = counterCalculator.calculateTotalBill(markupValue);
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = dateFormat.format(date);
-            History history = new History();
-            history.setCounterNumber(currentMetterNumber);
-            history.setDayTariff(tariffsOperator.getDayTariffValue(countersComboBox.getValue()));
-            history.setNightTariff(tariffsOperator.getNightTariffValue(countersComboBox.getValue()));
-            history.setMarkup(markupValue);
-            history.setTotalBill(totalBill);
-            history.setPayDate(formattedDate);
-            historyDAO.add(history);
-            displayMessage("Succsesfully added!", Color.GREEN.darker());
-        }
-        totalBill = 0;
-    }
-    @FXML
-    public void refreshCountersComboBox(MouseEvent event){
-        comboBoxObservableList.clear();
-        comboBoxObservableList.addAll(countersComboBoxInitializer.getMeterNumbers());
-        countersComboBox.setItems(comboBoxObservableList);
-    }
 
+    private void loadCountersComboBox() {
+        countersObservableList.clear();
+        countersObservableList.addAll(counterDAO.getItems());
+        countersComboBox.setItems(countersObservableList);
+    }
 }

@@ -22,10 +22,9 @@
         <TableView fx:id="historyTableView" prefHeight="400.0" prefWidth="700.0" GridPane.rowIndex="1">
             <columns>
                 <TableColumn fx:id="counterNumberTableColumn" prefWidth="100.0" text="Counter number" />
-                <TableColumn fx:id="dayTariffTableColumn" prefWidth="100.0" text="Day tariff" />
-                <TableColumn fx:id="nightTariffTableColumn" prefWidth="100.0" text="Night tariff" />
-                <TableColumn fx:id="markupTableColumn" prefWidth="100.0" text="Markup %" />
-                <TableColumn fx:id="billTableColumn" prefWidth="100.0" text="Total bill $" />
+                <TableColumn fx:id="currentDayConsumptionTableColumn" prefWidth="160.0" text="Current day consumption" />
+                <TableColumn fx:id="currentNightConsumptionTableColumn" prefWidth="160.0" text="Current night consumption" />
+                <TableColumn fx:id="billTableColumn" text="Total bill $" />
                 <TableColumn fx:id="payDateTableColumn" prefWidth="200.0" text="Pay date" />
             </columns>
         </TableView>
@@ -36,13 +35,13 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-                <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshTable" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Refresh">
+                <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefreshTableView" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Refresh">
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-                <Button onAction="#makeReport" fx:id="reportButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Report" />
-                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Delete" />
-                <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearHistory" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Clear" />
+                <Button fx:id="reportButton" mnemonicParsing="false" onAction="#handleMakeReport" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Report" />
+                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteCounter" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Delete" />
+                <Button fx:id="clearButton" mnemonicParsing="false" onAction="#handleClearTableView" prefHeight="25.0" prefWidth="75.0" styleClass="historyTableButton" text="Clear" />
             </children>
         </HBox>
     </children>
